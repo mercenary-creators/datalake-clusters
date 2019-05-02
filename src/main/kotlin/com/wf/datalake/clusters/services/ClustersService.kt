@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.*
 class ClustersService : DataLakeServiceSupport() {
 
     @GetMapping
-    fun mappings() = getCachedMappings("clusters")
+    fun mappings() = clock { getCachedMappings("clusters") }
 
     @GetMapping("/name")
-    fun name() = json("name" to "Dean S. Jones")
+    fun name() = clock { json("name" to "Dean S. Jones") }
 
     @GetMapping("/data")
-    fun data() = json("data" to sequenceOf(0..64 step 2))
+    fun data() = clock { json("data" to sequenceOf(0..64 step 2)) }
 }

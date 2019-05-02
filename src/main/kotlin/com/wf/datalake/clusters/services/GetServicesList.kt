@@ -32,11 +32,11 @@ class GetServicesList : DataLakeServiceSupport() {
     private lateinit var datalake: DataLakeService
 
     @GetMapping
-    fun mappings() = getCachedMappings("services")
+    fun mappings() = clock { getCachedMappings("services") }
 
     @PostMapping("/echo")
-    fun echo(@RequestBody body: JSONObject) = json("echo" to body, "uuid" to uuid())
+    fun echo(@RequestBody body: JSONObject) = clock { json("echo" to body, "uuid" to uuid()) }
 
     @GetMapping("/list")
-    fun list() = timed { json("list" to JSONArray(mappings(), clusters.mappings(), datalake.mappings())) }
+    fun list() = clock { json("list" to JSONArray(mappings(), clusters.mappings(), datalake.mappings())) }
 }

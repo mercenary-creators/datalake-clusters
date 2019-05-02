@@ -37,6 +37,11 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
         ConcurrentHashMap<String, JSONObject>(5)
     }
 
+    protected fun clock(block: () -> JSONObject): JSONObject {
+        val tick = NanoTicker()
+        return block().also { it["data_lake_time"] = tick() }
+    }
+
     protected fun getServiceMappingPrefix() = prefix
 
     protected fun getRequestMappingHandlerMapping() = handler
