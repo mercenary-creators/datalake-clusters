@@ -2,6 +2,7 @@ HELP.md
 .gradle
 /build/
 /src/main/resources/application.properties
+/src/main/client/node_modules/
 !gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
