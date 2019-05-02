@@ -15,5 +15,5 @@ class DataLakeService : DataLakeQueryServiceSupport() {
     fun name() = clock { json("name" to "Dean S. Jones") }
 
     @GetMapping("/data")
-    fun data() = clock { query("users", "select * from users") }
+    fun data() = clock { query(sql = "select * from users") }
 }

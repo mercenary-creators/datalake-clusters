@@ -16,5 +16,5 @@ abstract class DataLakeQueryServiceSupport : DataLakeServiceSupport() {
 
     protected fun template() = template
 
-    protected fun query(name: String, query: String) = json(name to template().queryForList(query))
+    protected fun query(sql: String, key: String = "results") = json(key to template().queryForList(sql), "uuid" to uuid())
 }
