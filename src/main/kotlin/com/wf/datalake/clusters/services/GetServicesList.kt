@@ -23,4 +23,7 @@ class GetServicesList : DataLakeServiceSupport() {
 
     @GetMapping("/list")
     fun list() = clock { json("list" to JSONArray(mappings(), clusters.mappings(), datalake.mappings())) }
+
+    @GetMapping("/todo")
+    fun todo() = WebClient.create("http://jsonplaceholder.typicode.com/todos").get().retrieve().bodyToFlux<JSONObject>()
 }
