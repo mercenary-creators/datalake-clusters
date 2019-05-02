@@ -1,0 +1,5 @@
+---
+applications:
+- name: datalake-clusters
+  path: build/libs/datalake-clusters.jar
+  random-route: true
