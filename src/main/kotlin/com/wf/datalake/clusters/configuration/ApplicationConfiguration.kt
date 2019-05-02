@@ -28,6 +28,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.annotation.*
 import org.springframework.http.MediaType
 import org.springframework.web.servlet.config.annotation.*
+import org.springframework.web.servlet.resource.PathResourceResolver
 
 @Configuration
 @ServletComponentScan
@@ -46,5 +47,13 @@ class ApplicationConfiguration : WebMvcConfigurer {
 
     override fun configureContentNegotiation(configurer: ContentNegotiationConfigurer) {
         configurer.defaultContentType(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON_UTF8)
+    }
+
+    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler("/resources/**")
+            .addResourceLocations("/resources/", "/other-resources/")
+            .setCachePeriod(3600)
+            .resourceChain(true)
+            .addResolver(PathResourceResolver())
     }
 }
