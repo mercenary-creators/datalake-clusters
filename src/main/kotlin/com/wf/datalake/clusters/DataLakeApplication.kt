@@ -9,6 +9,5 @@ class DataLakeApplication
 
 fun main(args: Array<String>) {
     TimeAndDate.setDefaultTimeZone()
-    runApplication<DataLakeApplication>(*args) {
-    }
+    runApplication<DataLakeApplication>(*args)
 }

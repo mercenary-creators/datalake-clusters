@@ -1,35 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Modern Application</title>
+        <title>DataLake Application</title>
     </head>
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="w3c.css">
     <link rel="stylesheet" href="app.css">
     <body class="BodyStyle">
-        <div ng-app="modernApplication" ng-cloak ng-controller="modernController" class="w3-card-2 w3-margin">
+        <div ng-app="lakeApplication" ng-cloak ng-controller="lakeController" class="w3-card-2 w3-margin">
             <header class="w3-container w3-light-grey w3-padding-16">
                 <h3>REST Tests - {{tstatus}}</h3>
             </header>
             <div class="ResultsBox" id="ResultsBox">
                 <pre>{{results}}</pre>
             </div>
-            <div class="w3-container w3-light-grey w3-padding-16">
+            <div class="w3-container w3-light-grey w3-padding-16 Fixed">
                 <div class="w3-row w3-margin-top">
                     <button ng-click="doServiceGET('/clusters')" ng-disabled="working" class="w3-btn w3-padding w3-pink">Clusters Bindings</button>
                     <button ng-click="doServiceGET('/clusters/name')" ng-disabled="working" class="w3-btn w3-padding w3-pink">Clusters Name</button>
                     <button ng-click="doServiceGET('/clusters/data')" ng-disabled="working" class="w3-btn w3-padding w3-pink">Clusters Data</button>
-                    <button ng-click="doServiceGET('/datalake')" ng-disabled="working" class="w3-btn w3-padding w3-teal">DataLake Bindings</button>
-                    <button ng-click="doServiceGET('/datalake/name')" ng-disabled="working" class="w3-btn w3-padding w3-teal">DataLake Name</button>
-                    <button ng-click="doServiceGET('/datalake/data')" ng-disabled="working" class="w3-btn w3-padding w3-teal">DataLake Data</button>
+                </div>
+                <div class="w3-row w3-margin-top">
+                    <button ng-click="doServiceGET('/datalake')" ng-disabled="working" class="w3-btn w3-padding w3-teal">Datalake Bindings</button>
+                    <button ng-click="doServiceGET('/datalake/name')" ng-disabled="working" class="w3-btn w3-padding w3-teal">Datalake Name</button>
+                    <button ng-click="doServiceGET('/datalake/users')" ng-disabled="working" class="w3-btn w3-padding w3-red">Datalake User</button>
                 </div>
                 <div class="w3-row w3-margin-top">
                     <button ng-click="doServiceGET('/services')" ng-disabled="working" class="w3-btn w3-padding w3-blue">Services Bindings</button>
                     <button ng-click="doServiceGET('/services/list')" ng-disabled="working" class="w3-btn w3-padding w3-blue">Services List</button>
-                    <button ng-click="doServiceGET('/services/todo')" ng-disabled="working" class="w3-btn w3-padding w3-blue">Services Todo</button>
                     <button ng-click="doServicePOST('/services/echo')" ng-disabled="working" class="w3-btn w3-padding w3-blue">Services Echo</button>
+                    <button ng-click="doServiceGET('/services/todos')" ng-disabled="working" class="w3-btn w3-padding w3-green">Services Todo</button>
+                    <button ng-click="doServiceGET('/services/posts')" ng-disabled="working" class="w3-btn w3-padding w3-green">Services Post</button>
+                    <button ng-click="doServiceGET('/services/prefix')" ng-disabled="working" class="w3-btn w3-padding w3-green">Services Root</button>
                 </div>
             </div>
         </div>

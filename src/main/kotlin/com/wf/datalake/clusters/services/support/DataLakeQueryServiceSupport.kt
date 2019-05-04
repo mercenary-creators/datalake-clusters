@@ -9,7 +9,8 @@ abstract class DataLakeQueryServiceSupport : DataLakeServiceSupport() {
     @Autowired
     private lateinit var template: JdbcTemplate
 
-    protected fun template() = template
+    protected val jdbc: JdbcTemplate
+        get() = template
 
-    protected fun query(sql: String, key: String = "results") = json(key to template().queryForList(sql))
+    protected fun query(sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
 }

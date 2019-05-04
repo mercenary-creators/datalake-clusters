@@ -13,43 +13,37 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
     @Autowired
     private lateinit var handler: RequestMappingHandlerMapping
 
-    private val prefix: String? by lazy {
+    protected val prefix: String? by lazy {
         getRequestMappingPath(this.javaClass)
     }
 
-    private val cached: ConcurrentHashMap<String, JSONObject> by lazy {
-        ConcurrentHashMap<String, JSONObject>(5)
+    protected val todosweb: WebClient by lazy {
+        getWebClient("http://jsonplaceholder.typicode.com/todos")
     }
 
-    protected fun clock(block: () -> JSONObject): JSONObject {
-        val tick = NanoTicker()
-        return block().also { it["data_lake_time"] = tick() }
+    protected val postsweb: WebClient by lazy {
+        getWebClient("http://jsonplaceholder.typicode.com/posts")
     }
 
-    protected fun getServiceMappingPrefix() = prefix
+    protected fun getWebClient(base: String) = WebClient.create(base)
 
-    protected fun getRequestMappingHandlerMapping() = handler
+    protected fun clock(name: String = "data_lake_time", block: () -> JSONObject) = NanoTicker().let { tick -> block().also { it[name] = tick(false) } }
 
-    protected fun getCachedMappings(name: String) = cached.computeIfAbsent(name) {
-        json(name to json("bindings" to getMappingsList()))
-    }
+    protected fun getCachedMappings(name: String) = cached.computeIfAbsent(name) { json(name to json("bindings" to getRequestMappingList(handler, "method", "path", prefix))) }
 
-    protected fun getMappingsList(): List<JSONObject> {
-        return getMappingsList(getServiceMappingPrefix())
-    }
+    data class PostData(val userId: Int, val id: Int, val title: String, val body: String)
 
-    protected fun getMappingsList(prefix: String?): List<JSONObject> {
-        return getRequestMappingList(getRequestMappingHandlerMapping(), "method", "path", prefix)
-    }
+    data class TodoData(val userId: Int, val id: Int, val title: String, val completed: Boolean)
 
     protected companion object {
 
-        fun getRequestMappingType(type: Class<*>?): RequestMapping? = if (type != null) {
-            type.getAnnotation(RequestMapping::class.java) ?: getRequestMappingType(type.superclass)
+        protected val cached: ConcurrentHashMap<String, JSONObject> by lazy {
+            ConcurrentHashMap<String, JSONObject>(5)
         }
-        else null
 
         fun getRequestMappingPath(type: Class<*>): String? = getRequestMappingBase(getRequestMappingType(type))
+
+        fun getRequestMappingType(type: Class<*>?): RequestMapping? = if (type != null) type.getAnnotation(RequestMapping::class.java) ?: getRequestMappingType(type.superclass) else null
 
         fun getRequestMappingBase(request: RequestMapping?): String? = if (request == null) null
         else {
@@ -70,14 +64,11 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
         }
 
         fun getRequestMappingList(handler: RequestMappingHandlerMapping, meth: String, link: String, prefix: String?): List<JSONObject> {
-            val filter: (JSONObject) -> Boolean = {
+            return handler.handlerMethods.keys.map { info -> getRequestMappingInfo(info, meth, link) }.filter {
                 if (prefix == null) false else it.asString(link).orEmpty().startsWith(prefix)
             }
-            return handler.handlerMethods.keys.map { getRequestMappingInfo(it, meth, link) }.filter(filter)
         }
 
-        fun getRequestMappingInfo(info: RequestMappingInfo, meth: String, link: String): JSONObject {
-            return json(meth to info.methodsCondition.methods.toList().elementAtOrElse(0) { RequestMethod.GET }, link to info.patternsCondition.patterns.toTypedArray()[0])
-        }
+        fun getRequestMappingInfo(info: RequestMappingInfo, meth: String, link: String) = json(meth to info.methodsCondition.methods.toList().elementAtOrElse(0) { RequestMethod.GET }, link to info.patternsCondition.patterns.toTypedArray()[0])
     }
 }

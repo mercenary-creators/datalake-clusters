@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class ClustersService : DataLakeServiceSupport() {
 
     @GetMapping
-    fun mappings() = clock { getCachedMappings("clusters") }
+    fun root() = clock { getCachedMappings("clusters") }
 
     @GetMapping("/name")
     fun name() = clock { json("name" to "Dean S. Jones") }

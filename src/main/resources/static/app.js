@@ -1,5 +1,5 @@
-var app = angular.module("modernApplication", []);
-app.controller("modernController", function($scope, $http) {
+var app = angular.module("lakeApplication", []);
+app.controller("lakeController", function($scope, $http) {
 	$scope.tstatus = "[READY]";
 	$scope.results = "";
 	$scope.working = false;

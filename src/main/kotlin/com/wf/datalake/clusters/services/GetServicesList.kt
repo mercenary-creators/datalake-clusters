@@ -16,14 +16,26 @@ class GetServicesList : DataLakeServiceSupport() {
     private lateinit var datalake: DataLakeService
 
     @GetMapping
-    fun mappings() = clock { getCachedMappings("services") }
+    fun root() = clock { getCachedMappings("services") }
+
+    @GetMapping("/prefix")
+    fun prefix() = clock { json("prefix" to prefix) }
 
     @PostMapping("/echo")
     fun echo(@RequestBody body: JSONObject) = clock { json("echo" to body, "uuid" to uuid()) }
 
     @GetMapping("/list")
-    fun list() = clock { json("list" to JSONArray(mappings(), clusters.mappings(), datalake.mappings())) }
+    fun list() = clock { json("list" to JSONArray(root(), clusters.root(), datalake.root())) }
 
-    @GetMapping("/todo")
-    fun todo() = WebClient.create("http://jsonplaceholder.typicode.com/todos").get().retrieve().bodyToFlux<JSONObject>()
+    @GetMapping("/todos")
+    fun todos() = todosweb.get().retrieve().bodyToFlux<TodoData>()
+
+    @GetMapping("/todo/{id}")
+    fun todo(@PathVariable(required = false) id: Int = 1) = todosweb.get().uri("/{id}", id).retrieve().bodyToMono<TodoData>()
+
+    @GetMapping("/posts")
+    fun posts() = postsweb.get().retrieve().bodyToFlux<PostData>()
+
+    @GetMapping("/post/{id}")
+    fun post(@PathVariable(required = false) id: Int = 1) = postsweb.get().uri("/{id}", id).retrieve().bodyToMono<PostData>()
 }
