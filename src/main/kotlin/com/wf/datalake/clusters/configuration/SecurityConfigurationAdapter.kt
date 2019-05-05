@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 class SecurityConfigurationAdapter : WebSecurityConfigurerAdapter() {
     override fun configure(conf: HttpSecurity) {
-        conf.authorizeRequests().antMatchers("/datalake/**", "/datalake", "/clusters/**", "/clusters", "/services/**", "/services").permitAll().requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
+        conf.authorizeRequests().antMatchers("/datalake/**",  "/clusters/**", "/services/**").permitAll()
+            .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
     }
 }

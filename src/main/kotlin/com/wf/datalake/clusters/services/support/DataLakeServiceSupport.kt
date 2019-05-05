@@ -13,7 +13,7 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
     @Autowired
     private lateinit var handler: RequestMappingHandlerMapping
 
-    protected val prefix: String? by lazy {
+    private val prefix: String by lazy {
         getRequestMappingPath(this.javaClass)
     }
 
@@ -27,25 +27,25 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
 
     protected fun getWebClient(base: String) = WebClient.create(base)
 
-    protected fun clock(name: String = "data_lake_time", block: () -> JSONObject) = NanoTicker().let { tick -> block().also { it[name] = tick(false) } }
+    protected fun clock(name: String = "real_time", block: () -> JSONObject) = NanoTicker().let { tick -> block().also { it[name] = tick(false) } }
 
-    protected fun getCachedMappings(name: String) = cached.computeIfAbsent(name) { json(name to json("bindings" to getRequestMappingList(handler, "method", "path", prefix))) }
+    protected fun getCachedMappings(name: String = prefix) = cached.computeIfAbsent(name) { json(name to json("bindings" to getRequestMappingList(handler, "method", "path", prefix))) }
 
     data class PostData(val userId: Int, val id: Int, val title: String, val body: String)
 
     data class TodoData(val userId: Int, val id: Int, val title: String, val completed: Boolean)
 
-    protected companion object {
+    internal companion object {
 
-        protected val cached: ConcurrentHashMap<String, JSONObject> by lazy {
+        internal val cached: ConcurrentHashMap<String, JSONObject> by lazy {
             ConcurrentHashMap<String, JSONObject>(5)
         }
 
-        fun getRequestMappingPath(type: Class<*>): String? = getRequestMappingBase(getRequestMappingType(type))
+        internal fun getRequestMappingPath(type: Class<*>): String = getRequestMappingBase(getRequestMappingType(type)) ?: "/"
 
-        fun getRequestMappingType(type: Class<*>?): RequestMapping? = if (type != null) type.getAnnotation(RequestMapping::class.java) ?: getRequestMappingType(type.superclass) else null
+        internal fun getRequestMappingType(type: Class<*>?): RequestMapping? = if (type != null) type.getAnnotation(RequestMapping::class.java) ?: getRequestMappingType(type.superclass) else null
 
-        fun getRequestMappingBase(request: RequestMapping?): String? = if (request == null) null
+        internal fun getRequestMappingBase(request: RequestMapping?): String? = if (request == null) null
         else {
             var base: String? = null
             request.path.also {
@@ -63,12 +63,12 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
             base
         }
 
-        fun getRequestMappingList(handler: RequestMappingHandlerMapping, meth: String, link: String, prefix: String?): List<JSONObject> {
-            return handler.handlerMethods.keys.map { info -> getRequestMappingInfo(info, meth, link) }.filter {
-                if (prefix == null) false else it.asString(link).orEmpty().startsWith(prefix)
-            }
+        internal fun getRequestMappingList(handler: RequestMappingHandlerMapping, meth: String, link: String, prefix: String): List<JSONObject> {
+            return handler.handlerMethods.keys.map { getRequestMappingInfo(it, meth, link) }.filter { it.asString(link).orEmpty().startsWith(prefix) }
         }
 
-        fun getRequestMappingInfo(info: RequestMappingInfo, meth: String, link: String) = json(meth to info.methodsCondition.methods.toList().elementAtOrElse(0) { RequestMethod.GET }, link to info.patternsCondition.patterns.toTypedArray()[0])
+        internal fun getRequestMappingInfo(info: RequestMappingInfo, meth: String, link: String): JSONObject {
+            return json(meth to info.methodsCondition.methods.toList().elementAtOrElse(0) { RequestMethod.GET }, link to info.patternsCondition.patterns.toList().elementAtOrElse(0) { "/" })
+        }
     }
 }

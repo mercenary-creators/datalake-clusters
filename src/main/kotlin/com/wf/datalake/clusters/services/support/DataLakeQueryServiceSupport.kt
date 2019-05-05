@@ -9,8 +9,10 @@ abstract class DataLakeQueryServiceSupport : DataLakeServiceSupport() {
     @Autowired
     private lateinit var template: JdbcTemplate
 
-    protected val jdbc: JdbcTemplate
+    val jdbc: JdbcTemplate
         get() = template
 
-    protected fun query(sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
+    fun query(sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
+
+    inline fun <reified T : Any> forList(sql: String): List<T> = jdbc.queryForList(sql, T::class.java)
 }

@@ -1,7 +1,7 @@
 package com.wf.datalake.clusters.configuration
 
-import co.mercenary.creators.core.kotlin.*
-import org.springframework.beans.factory.annotation.*
+import co.mercenary.creators.core.kotlin.AbstractLogging
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 import java.security.SecureRandom
+import javax.sql.DataSource
 
 @EnableWebSecurity
 @EnableRedisHttpSession
@@ -18,15 +19,11 @@ class SecurityConfiguration : AbstractLogging() {
         BCryptPasswordEncoder(16, SecureRandom())
     }
 
-    @Value("\${datalake.admin.username}")
-    private val username: String = EMPTY_STRING
-
-    @Value("\${datalake.admin.password}")
-    private val password: String = EMPTY_STRING
-
     @Autowired
-    fun configureGlobal(conf: AuthenticationManagerBuilder, encoder: PasswordEncoder) {
-        conf.inMemoryAuthentication().withUser(username).password(password).authorities("ADMIN", "ACTUATOR", "USER").and().passwordEncoder(encoder)
+    fun configureAuthentication(conf: AuthenticationManagerBuilder, pass: PasswordEncoder, data: DataSource) {
+        conf.jdbcAuthentication().dataSource(data).passwordEncoder(pass)
+            .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
+            .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username=?")
     }
 
     @Bean

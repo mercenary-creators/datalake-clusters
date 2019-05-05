@@ -21,8 +21,8 @@ class ApplicationConfiguration : WebMvcConfigurer {
 
     @Bean
     fun datalakeJackson(): Jackson2ObjectMapperBuilderCustomizer {
-        return Jackson2ObjectMapperBuilderCustomizer { builder ->
-            builder.featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        return Jackson2ObjectMapperBuilderCustomizer {
+            it.featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .dateFormat(TimeAndDate.getDefaultDateFormat()).timeZone(TimeAndDate.getDefaultTimeZone())
                 .modulesToInstall(CoreKotlinModule(), KotlinModule(), ParameterNamesModule(), JodaModule())
                 .featuresToEnable(JsonGenerator.Feature.ESCAPE_NON_ASCII, JsonParser.Feature.ALLOW_COMMENTS, JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN)

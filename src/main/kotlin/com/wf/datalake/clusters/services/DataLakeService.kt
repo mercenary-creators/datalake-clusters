@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*
 class DataLakeService : DataLakeQueryServiceSupport() {
 
     @GetMapping
-    fun root() = clock { getCachedMappings("datalake") }
+    fun root() = clock { getCachedMappings() }
 
-    @GetMapping("/name")
-    fun name() = clock { json("name" to "Dean S. Jones") }
+    @GetMapping("/posts")
+    fun posts() = postsweb.get().retrieve().bodyToFlux<PostData>()
 
     @GetMapping("/users")
-    fun users() = clock { query(sql = "select * from users") }
+    fun users() = clock { query(sql = "SELECT username, enabled FROM users") }
 }
