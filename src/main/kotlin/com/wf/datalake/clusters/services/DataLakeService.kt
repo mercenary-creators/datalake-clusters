@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class DataLakeService : DataLakeQueryServiceSupport() {
 
     @GetMapping
-    fun root() = clock { getCachedMappings() }
+    fun root() = clock { getCachedMappings("datalake") }
 
     @GetMapping("/posts")
     fun posts() = postsweb.get().retrieve().bodyToFlux<PostData>()

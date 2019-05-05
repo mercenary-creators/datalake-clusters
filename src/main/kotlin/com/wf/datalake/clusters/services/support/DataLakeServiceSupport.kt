@@ -29,7 +29,7 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
 
     protected fun clock(name: String = "real_time", block: () -> JSONObject) = NanoTicker().let { tick -> block().also { it[name] = tick(false) } }
 
-    protected fun getCachedMappings(name: String = prefix) = cached.computeIfAbsent(name) { json(name to json("bindings" to getRequestMappingList(handler, "method", "path", prefix))) }
+    protected fun getCachedMappings(name: String) = cached.computeIfAbsent(name) { json(name to json("bindings" to getRequestMappingList(handler, "method", "path", prefix))) }
 
     data class PostData(val userId: Int, val id: Int, val title: String, val body: String)
 

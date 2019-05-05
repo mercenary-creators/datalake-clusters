@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/services")
-class GetServicesList : DataLakeServiceSupport() {
+class ServicesService : DataLakeServiceSupport() {
 
     @Autowired
     private lateinit var clusters: ClustersService
@@ -16,10 +16,10 @@ class GetServicesList : DataLakeServiceSupport() {
     private lateinit var datalake: DataLakeService
 
     @GetMapping
-    fun root() = clock { getCachedMappings() }
+    fun root() = clock { getCachedMappings("services") }
 
     @GetMapping("/list")
-    fun list() = clock { json("list" to JSONArray(root(), clusters.root(), datalake.root())) }
+    fun list() = clock { json("list" to listOf(root(), clusters.root(), datalake.root())) }
 
     @GetMapping("/todos")
     fun todos() = todosweb.get().retrieve().bodyToFlux<TodoData>()

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class ClustersService : DataLakeQueryServiceSupport() {
 
     @GetMapping
-    fun root() = clock { getCachedMappings() }
+    fun root() = clock { getCachedMappings("clusters") }
 
     @GetMapping("/roles")
     fun roles() = clock { query(sql = "SELECT username, authority FROM authorities") }
