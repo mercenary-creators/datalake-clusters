@@ -5,7 +5,7 @@ import java.util.*
 
 object TimeAndDate {
 
-    private val DEFAULT_TIME_ZOME: TimeZone by lazy {
+    private val DEFAULT_TIME_ZONE: TimeZone by lazy {
         TimeZone.getTimeZone("UTC")
     }
 
@@ -13,9 +13,9 @@ object TimeAndDate {
         SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS z")
     }
 
-    fun getDefaultTimeZone(): TimeZone = DEFAULT_TIME_ZOME.clone() as TimeZone
+    fun getDefaultTimeZone(): TimeZone = DEFAULT_TIME_ZONE.clone() as TimeZone
 
-    fun setDefaultTimeZone(zone: TimeZone = DEFAULT_TIME_ZOME) {
+    fun setDefaultTimeZone(zone: TimeZone = DEFAULT_TIME_ZONE) {
         TimeZone.setDefault(zone)
     }
 

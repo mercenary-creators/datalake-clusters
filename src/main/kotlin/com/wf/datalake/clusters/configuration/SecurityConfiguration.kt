@@ -1,10 +1,11 @@
 package com.wf.datalake.clusters.configuration
 
-import co.mercenary.creators.core.kotlin.AbstractLogging
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Bean
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
+import org.springframework.context.annotation.*
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.*
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
@@ -13,7 +14,7 @@ import javax.sql.DataSource
 
 @EnableWebSecurity
 @EnableRedisHttpSession
-class SecurityConfiguration : AbstractLogging() {
+class SecurityConfiguration {
 
     private val encoder: PasswordEncoder by lazy {
         BCryptPasswordEncoder(16, SecureRandom())
@@ -28,4 +29,12 @@ class SecurityConfiguration : AbstractLogging() {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = encoder
+
+    @Configuration
+    inner class SecurityConfigurationAdapter : WebSecurityConfigurerAdapter() {
+        override fun configure(conf: HttpSecurity) {
+            conf.authorizeRequests().antMatchers("/datalake/**",  "/clusters/**", "/services/**").permitAll()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
+        }
+    }
 }
