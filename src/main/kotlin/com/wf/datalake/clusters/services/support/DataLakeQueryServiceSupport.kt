@@ -13,6 +13,4 @@ abstract class DataLakeQueryServiceSupport : DataLakeServiceSupport() {
         get() = template
 
     fun query(sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
-
-    inline fun <reified T : Any> forList(sql: String): List<T> = jdbc.queryForList(sql, T::class.java)
 }
