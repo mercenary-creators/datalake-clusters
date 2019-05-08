@@ -1,12 +1,12 @@
 package com.wf.datalake.clusters.services
 
 import co.mercenary.creators.core.kotlin.*
-import com.wf.datalake.clusters.services.support.DataLakeQueryServiceSupport
+import com.wf.datalake.clusters.services.support.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/datalake")
-class DataLakeService : DataLakeQueryServiceSupport() {
+class DataLakeService : DataLakeServiceSupport() {
 
     @GetMapping
     fun root() = clock { getCachedMappings("datalake") }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/clusters")
-class ClustersService : DataLakeQueryServiceSupport() {
+class ClustersService : DataLakeServiceSupport() {
 
     @GetMapping
     fun root() = clock { getCachedMappings("clusters") }
