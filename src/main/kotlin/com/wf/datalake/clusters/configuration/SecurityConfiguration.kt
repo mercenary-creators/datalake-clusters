@@ -23,8 +23,6 @@ class SecurityConfiguration {
     @Autowired
     fun configureAuthentication(conf: AuthenticationManagerBuilder, pass: PasswordEncoder, data: DataSource) {
         conf.jdbcAuthentication().dataSource(data).passwordEncoder(pass)
-            .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
-            .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username=?")
     }
 
     @Bean

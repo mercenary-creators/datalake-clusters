@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/open/services")
 class ServicesService : DataLakeServiceSupport() {
-
     @Autowired
     private lateinit var clusters: ClustersService
 

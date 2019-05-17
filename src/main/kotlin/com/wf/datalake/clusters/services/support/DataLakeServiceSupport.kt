@@ -10,7 +10,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.concurrent.ConcurrentHashMap
 
 abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
-
     @Autowired
     private lateinit var template: JdbcTemplate
 
@@ -45,7 +44,6 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
     data class TodoData(val userId: Int, val id: Int, val title: String, val completed: Boolean)
 
     internal companion object {
-
         internal val cached: ConcurrentHashMap<String, JSONObject> by lazy {
             ConcurrentHashMap<String, JSONObject>(5)
         }

@@ -33,10 +33,7 @@ class ApplicationConfiguration : WebMvcConfigurer {
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/resources/**")
-            .addResourceLocations("/resources/")
-            .setCachePeriod(3600)
-            .resourceChain(true)
-            .addResolver(PathResourceResolver())
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/")
+            .setCachePeriod(3600).resourceChain(true).addResolver(PathResourceResolver())
     }
 }
