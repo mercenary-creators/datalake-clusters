@@ -33,7 +33,7 @@ class SecurityConfiguration {
     @Configuration
     inner class SecurityConfigurationAdapter : WebSecurityConfigurerAdapter() {
         override fun configure(conf: HttpSecurity) {
-            conf.authorizeRequests().antMatchers("/datalake/**", "/clusters/**", "/services/**").permitAll()
+            conf.authorizeRequests().antMatchers("/open/**").permitAll()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
         }
     }

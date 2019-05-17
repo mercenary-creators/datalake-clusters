@@ -62,5 +62,5 @@ app.controller("lakeController", function($scope, $http) {
 			$scope.statusERROR(path, response);
 		});
 	};
-	$scope.doServiceGET('/clusters');
+	$scope.doServiceGET('/open/clusters');
 });

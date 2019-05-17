@@ -16,7 +16,6 @@ import org.springframework.web.servlet.resource.PathResourceResolver
 
 @Configuration
 @ServletComponentScan
-@Profile("development", "production")
 class ApplicationConfiguration : WebMvcConfigurer {
 
     @Bean

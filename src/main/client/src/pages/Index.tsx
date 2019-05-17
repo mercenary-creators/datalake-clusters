@@ -38,10 +38,10 @@ const Index = withStyles(styles)(
 
         render() {
             return <div>
-                <Button onClick={this.open}>
+                <Button variant="contained" color="primary" onClick={this.open}>
                     Open
                 </Button>
-                <Button onClick={this.done}>
+                <Button variant="contained" color="secondary" onClick={this.done}>
                     Done
                 </Button>
             </div>

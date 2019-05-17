@@ -34,8 +34,6 @@ abstract class DataLakeServiceSupport : AbstractDataLakeSupport() {
 
     protected fun query(sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
 
-    protected inline fun <reified T : Any> queryForList(sql: String): List<T> = jdbc.queryForList(sql, T::class.java)
-
     protected fun getWebClient(base: String) = WebClient.create(base)
 
     protected fun clock(name: String = "real_time", block: () -> JSONObject) = NanoTicker().let { tick -> block().also { it[name] = tick(false) } }

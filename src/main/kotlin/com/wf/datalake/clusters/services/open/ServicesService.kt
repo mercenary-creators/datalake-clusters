@@ -1,4 +1,4 @@
-package com.wf.datalake.clusters.services
+package com.wf.datalake.clusters.services.open
 
 import co.mercenary.creators.core.kotlin.*
 import com.wf.datalake.clusters.services.support.DataLakeServiceSupport
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/services")
+@RequestMapping("/open/services")
 class ServicesService : DataLakeServiceSupport() {
 
     @Autowired
