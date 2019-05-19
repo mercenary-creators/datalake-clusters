@@ -1,14 +1,14 @@
 package com.wf.datalake.clusters.services.open
 
 import co.mercenary.creators.core.kotlin.*
-import com.wf.datalake.clusters.services.support.*
+import com.wf.datalake.clusters.support.DataLakeServiceSupport
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/open/clusters")
 class ClustersService : DataLakeServiceSupport() {
     @GetMapping
-    fun root() = clock { getCachedMappings("clusters") }
+    fun root() = clock { getCachedMappings("/open/clusters") }
 
     @GetMapping("/roles")
     fun roles() = clock { query(sql = "SELECT username, authority FROM authorities") }

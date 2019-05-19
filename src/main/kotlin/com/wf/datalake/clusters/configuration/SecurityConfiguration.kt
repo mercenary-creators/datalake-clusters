@@ -8,12 +8,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.*
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.session.data.redis.RedisFlushMode
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 import java.security.SecureRandom
 import javax.sql.DataSource
 
 @EnableWebSecurity
-@EnableRedisHttpSession
+@EnableRedisHttpSession(redisNamespace = "datalake:session", redisFlushMode = RedisFlushMode.IMMEDIATE)
 class SecurityConfiguration {
 
     private val encoder: PasswordEncoder by lazy {
@@ -31,7 +32,7 @@ class SecurityConfiguration {
     @Configuration
     inner class SecurityConfigurationAdapter : WebSecurityConfigurerAdapter() {
         override fun configure(conf: HttpSecurity) {
-            conf.authorizeRequests().antMatchers("/open/**").permitAll()
+            conf.authorizeRequests().antMatchers("/open/**").permitAll().antMatchers("/user/**").hasAuthority("USER")
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
         }
     }

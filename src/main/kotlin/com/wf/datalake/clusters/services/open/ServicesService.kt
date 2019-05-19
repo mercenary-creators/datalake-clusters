@@ -1,7 +1,7 @@
 package com.wf.datalake.clusters.services.open
 
 import co.mercenary.creators.core.kotlin.*
-import com.wf.datalake.clusters.services.support.DataLakeServiceSupport
+import com.wf.datalake.clusters.support.DataLakeServiceSupport
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +15,7 @@ class ServicesService : DataLakeServiceSupport() {
     private lateinit var datalake: DataLakeService
 
     @GetMapping
-    fun root() = clock { getCachedMappings("services") }
+    fun root() = clock { getCachedMappings("/open/services") }
 
     @GetMapping("/list")
     fun list() = clock { json("list" to listOf(root(), clusters.root(), datalake.root())) }

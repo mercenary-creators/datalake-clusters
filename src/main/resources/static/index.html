@@ -32,6 +32,16 @@
                     <button ng-click="doServiceGET('/open/services/list')" ng-disabled="working" class="w3-btn w3-padding w3-blue">Services List</button>
                     <button ng-click="doServiceGET('/open/services/todos')" ng-disabled="working" class="w3-btn w3-padding w3-blue">Services Todo</button>
                 </div>
+                <div class="w3-row w3-margin-top">
+                    <button ng-click="doServiceGET('/user/sessions')" ng-disabled="working" class="w3-btn w3-padding w3-red">Sessions Bindings</button>
+                    <button ng-click="doServiceGET('/user/sessions/data')" ng-disabled="working" class="w3-btn w3-padding w3-red">Sessions Data</button>
+                    <button ng-click="doServiceGET('/user/sessions/kill')" ng-disabled="working" class="w3-btn w3-padding w3-red">Sessions Kill</button>
+                </div>
+                <div class="w3-row w3-margin-top">
+                    <button ng-click="doServiceGET('/user/datalake')" ng-disabled="working" class="w3-btn w3-padding w3-indigo">Datalake Bindings</button>
+                    <button ng-click="doServiceGET('/user/datalake/list')" ng-disabled="working" class="w3-btn w3-padding w3-indigo">Datalake List</button>
+                    <button ng-click="doServiceGET('/user/datalake/node')" ng-disabled="working" class="w3-btn w3-padding w3-indigo">Datalake Node</button>
+                </div>
             </div>
         </div>
     </body>
