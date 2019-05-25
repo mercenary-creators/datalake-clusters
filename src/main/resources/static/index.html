@@ -33,6 +33,16 @@
                     <button ng-click="doServiceGET('/open/services/todos')" ng-disabled="working" class="w3-btn w3-padding w3-blue">Services Todo</button>
                 </div>
                 <div class="w3-row w3-margin-top">
+                    <button ng-click="doServiceGET('/open/redisops')" ng-disabled="working" class="w3-btn w3-padding w3-purple">RedisOps Bindings</button>
+                    <button ng-click="doServiceGET('/open/redisops/data')" ng-disabled="working" class="w3-btn w3-padding w3-purple">RedisOps Data</button>
+                    <button ng-click="doServicePOST('/open/redisops/save')" ng-disabled="working" class="w3-btn w3-padding w3-purple">RedisOps Save</button>
+                </div>
+                <div class="w3-row w3-margin-top">
+                    <button ng-click="doServiceGET('/open/redisops')" ng-disabled="working" class="w3-btn w3-padding w3-green">RedisOps Bindings</button>
+                    <button ng-click="doServiceGET('/open/redisops/keys')" ng-disabled="working" class="w3-btn w3-padding w3-green">RedisOps Keys</button>
+                    <button ng-click="doServiceGET('/open/redisops/kill')" ng-disabled="working" class="w3-btn w3-padding w3-green">RedisOps Kill</button>
+                </div>
+                <div class="w3-row w3-margin-top">
                     <button ng-click="doServiceGET('/user/sessions')" ng-disabled="working" class="w3-btn w3-padding w3-red">Sessions Bindings</button>
                     <button ng-click="doServiceGET('/user/sessions/data')" ng-disabled="working" class="w3-btn w3-padding w3-red">Sessions Data</button>
                     <button ng-click="doServiceGET('/user/sessions/kill')" ng-disabled="working" class="w3-btn w3-padding w3-red">Sessions Kill</button>
