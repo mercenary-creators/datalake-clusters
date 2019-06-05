@@ -9,14 +9,9 @@ interface ILinkTabProps extends RouteComponentProps, TabProps {
 
 export const LinkTab = withRouter<ILinkTabProps>(({history, to, ...props}) => {
     delete props.staticContext;
-    return (
-        <Tab
-            component='a'
-            onClick={event => {
-                event.preventDefault();
-                history.push(to)
-            }}
-            {...props}
-        />
-    );
+    return <Tab component='a' onClick={event => {
+        event.preventDefault();
+        history.push(to)
+    }}{...props}
+    />;
 });

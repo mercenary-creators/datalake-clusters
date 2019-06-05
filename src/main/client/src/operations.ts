@@ -2,8 +2,8 @@ import {IOperation} from "./pages/DemoPage";
 
 const bindingOperation = (path: string): IOperation => {
     return {
-        label: 'Bindings',
         path,
+        label: 'Bindings',
         dataJsonPath: '$..bindings[*]'
     }
 };

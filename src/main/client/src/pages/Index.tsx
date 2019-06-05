@@ -46,24 +46,17 @@ const Index = withStyles(styles)(
 
         render() {
             const {selected} = this.state;
-            return (
-                <div>
-                    <AppBar position="static">
-                        <Tabs variant="fullWidth" value={selected} onChange={this.onTabChange}>
-                            {routes.map((r, i) => (
-                                <LinkTab key={i} label={r.label} value={r.label} to={r.path} />
-                            ))}
-                        </Tabs>
-                    </AppBar>
-                    <Switch>
-                        <Route {...routes[0]} path="/" exact={true}/>
-                        {routes.map((r, i) => (
-                            <Route key={i} {...r}/>
-                        ))}
-                    </Switch>
-
-                </div>
-            );
+            return <div>
+                <AppBar position="static">
+                    <Tabs variant="fullWidth" value={selected} onChange={this.onTabChange}>
+                        {routes.map((r, i) => <LinkTab key={i} label={r.label} value={r.label} to={r.path}/>)}
+                    </Tabs>
+                </AppBar>
+                <Switch>
+                    <Route {...routes[0]} path="/" exact={true}/>
+                    {routes.map((r, i) => <Route key={i} {...r}/>)}
+                </Switch>
+            </div>;
         };
     }
 );
