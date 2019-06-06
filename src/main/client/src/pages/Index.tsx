@@ -1,9 +1,9 @@
 import React from 'react';
 import {Theme, WithStyles, createStyles, withStyles} from '@material-ui/core/styles';
-import {routes} from "../routes";
-import {Route, Switch} from "react-router";
-import {AppBar, Tabs} from "@material-ui/core";
-import {LinkTab} from "../components/LinkTab";
+import {routes} from '../routes';
+import {Route, Switch} from 'react-router';
+import {AppBar, Tabs} from '@material-ui/core';
+import {LinkTab} from '../components/LinkTab';
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -47,13 +47,13 @@ const Index = withStyles(styles)(
         render() {
             const {selected} = this.state;
             return <div>
-                <AppBar position="static">
-                    <Tabs variant="fullWidth" value={selected} onChange={this.onTabChange}>
+                <AppBar position='static'>
+                    <Tabs variant='fullWidth' value={selected} onChange={this.onTabChange}>
                         {routes.map((r, i) => <LinkTab key={i} label={r.label} value={r.label} to={r.path}/>)}
                     </Tabs>
                 </AppBar>
                 <Switch>
-                    <Route {...routes[0]} path="/" exact={true}/>
+                    <Route {...routes[0]} path='/' exact={true}/>
                     {routes.map((r, i) => <Route key={i} {...r}/>)}
                 </Switch>
             </div>;

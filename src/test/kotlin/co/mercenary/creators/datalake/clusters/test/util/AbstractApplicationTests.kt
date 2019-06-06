@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package co.mercenary.creators.datalake.clusters.test.util
 
 import co.mercenary.creators.core.kotlin.*
@@ -21,8 +37,10 @@ import java.util.function.*
 @SpringBootTest
 @TestPropertySource(properties = ["data.lake.redis.bean.name=datalake:test"])
 abstract class AbstractApplicationTests(private val cancel: Boolean = true) : AbstractDataLakeSupport() {
+
     @Autowired
     private lateinit var pencoders: PasswordEncoder
+
     @Autowired
     private lateinit var scheduled: ScheduledAnnotationBeanPostProcessor
 
@@ -37,18 +55,6 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Ab
                 it.cancel()
             }
         }
-    }
-
-    fun readLineFrom(data: Reader): String {
-        return data.buffered().readLine()
-    }
-
-    fun readLineFrom(data: ByteArray): String {
-        return readLineFrom(data.toInputStream())
-    }
-
-    fun readLineFrom(data: Resource): String {
-        return data.toReader(Charsets.UTF_8).use { it.readLine() }
     }
 
     fun lines(data: URL, action: (String) -> Unit) {
@@ -69,10 +75,6 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Ab
 
     fun lines(data: InputStream = System.`in`, action: (String) -> Unit) {
         data.toReader(Charsets.UTF_8).forEachLine(action)
-    }
-
-    fun readLineFrom(data: InputStream = System.`in`): String {
-        return readLine().orEmpty()
     }
 
     fun assertEach(vararg list: Executable) {

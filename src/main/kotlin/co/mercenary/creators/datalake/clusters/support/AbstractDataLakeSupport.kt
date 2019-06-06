@@ -1,18 +1,31 @@
+/*
+ * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package co.mercenary.creators.datalake.clusters.support
 
 import co.mercenary.creators.core.kotlin.*
-import co.mercenary.creators.datalake.clusters.support.arch.RuntimeStatistics
-import co.mercenary.creators.datalake.clusters.support.redis.LakeRedisBean
+import co.mercenary.creators.datalake.clusters.support.db.SQL
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.*
 import org.springframework.jdbc.core.JdbcTemplate
 
 abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAware {
-    @Autowired
-    private lateinit var template: JdbcTemplate
 
     @Autowired
-    private lateinit var datalake: LakeRedisBean
+    private lateinit var template: JdbcTemplate
 
     private lateinit var application: ApplicationContext
 
@@ -20,14 +33,8 @@ abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAw
         application = context
     }
 
-    protected val stat: RuntimeStatistics
-        get() = RuntimeStatistics.make()
-
     protected val jdbc: JdbcTemplate
         get() = template
-
-    protected val redis: LakeRedisBean
-        get() = datalake
 
     protected val context: ApplicationContext
         get() = application
@@ -38,7 +45,7 @@ abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAw
 
     protected fun getWebClient(base: String) = WebClient.create(base)
 
-    protected fun query(sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
+    protected fun query(@SQL sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
 
     protected fun <T> timed(block: () -> T): T = timed({ info { it } }, block)
 

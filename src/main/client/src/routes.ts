@@ -1,5 +1,5 @@
-import {RouteProps} from "react-router";
-import {ClustersDemo, DatalakeDemo} from "./pages/demos";
+import {RouteProps} from 'react-router';
+import {ClustersDemo, DatalakeDemo} from './pages/demos';
 
 interface IDemoRoute extends RouteProps {
     path: string;

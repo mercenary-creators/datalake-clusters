@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-@file:kotlin.jvm.JvmName("DataLakeTestKt")
+package co.mercenary.creators.datalake.clusters.support.db
 
-package co.mercenary.creators.datalake.clusters
+import org.intellij.lang.annotations.Language
+import kotlin.annotation.AnnotationRetention.SOURCE
+import kotlin.annotation.AnnotationTarget.*
 
-typealias Executable = org.junit.jupiter.api.function.Executable
-
-typealias DataLakeTest = co.mercenary.creators.datalake.clusters.test.util.AbstractApplicationTests
-
+@Retention(SOURCE)
+@Language("Generic SQL")
+@Target(ANNOTATION_CLASS, FIELD, FUNCTION, PROPERTY, PROPERTY_GETTER, PROPERTY_SETTER, LOCAL_VARIABLE, VALUE_PARAMETER, EXPRESSION)
+@MustBeDocumented
+annotation class SQL

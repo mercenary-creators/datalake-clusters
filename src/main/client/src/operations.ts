@@ -1,4 +1,4 @@
-import {IOperation} from "./pages/DemoPage";
+import {IOperation} from './pages/DemoPage';
 
 const bindingOperation = (path: string): IOperation => {
     return {

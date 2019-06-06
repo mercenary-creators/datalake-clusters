@@ -1,7 +1,7 @@
-import {RouteComponentProps, withRouter} from "react-router";
-import {TabProps} from "@material-ui/core/Tab";
-import {Tab} from "@material-ui/core";
-import React from "react";
+import {RouteComponentProps, withRouter} from 'react-router';
+import {TabProps} from '@material-ui/core/Tab';
+import {Tab} from '@material-ui/core';
+import React from 'react';
 
 interface ILinkTabProps extends RouteComponentProps, TabProps {
     to: string;
