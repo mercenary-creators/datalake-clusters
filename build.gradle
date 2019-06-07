@@ -29,6 +29,9 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
 }
 
 ext {
@@ -36,6 +39,7 @@ ext {
 }
 
 dependencies {
+    implementation(group: 'co.mercenary-creators', name: 'datalake-clusters-ui', version: '0.0.1-SNAPSHOT')
     implementation(group: 'co.mercenary-creators', name: 'mercenary-creators-core-kotlin', version: '1.0.0-RELEASE')
     implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${JACKSON_DATABIND_VERSION}")
     implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${JACKSON_DATABIND_VERSION}")
