@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.datalake.clusters.services.user
 
-import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeServiceSupport
+import co.mercenary.creators.datalake.clusters.support.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -27,8 +27,8 @@ class UserLakeService : AbstractDataLakeServiceSupport() {
     fun root() = clock { getCachedMappings("/user/datalake") }
 
     @GetMapping("/node")
-    fun node() = clock { query(sql = "SELECT * FROM nodes", key = "nodes") }
+    fun node() = clock { query(sql = "SELECT * FROM nodes") }
 
     @GetMapping("/list")
-    fun data() = clock { query(sql = "SELECT * FROM servers", key = "servers") }
+    fun data() = clock { query(sql = "SELECT * FROM servers") }
 }

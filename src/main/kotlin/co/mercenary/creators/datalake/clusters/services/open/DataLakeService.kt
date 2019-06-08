@@ -28,7 +28,7 @@ class DataLakeService : AbstractDataLakeServiceSupport() {
     fun root() = clock { getCachedMappings("/open/datalake") }
 
     @GetMapping("/posts")
-    fun posts() = postsweb.get().retrieve().bodyToFlux<PostData>()
+    fun posts() = timed { postsweb.get().retrieve().bodyToFlux<PostData>() }
 
     @GetMapping("/users")
     fun users() = clock { query(sql = "SELECT username, enabled FROM users") }

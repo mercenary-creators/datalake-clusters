@@ -30,6 +30,6 @@ class ClustersService : AbstractDataLakeServiceSupport() {
     @GetMapping("/roles")
     fun roles() = clock { query(sql = "SELECT username, authority FROM authorities") }
 
-    @PostMapping("/echo")
-    fun echo(@RequestBody body: Any) = clock { json("body" to body) }
+    @GetMapping("/todos")
+    fun todos() = timed { todosweb.get().retrieve().bodyToFlux<TodoData>() }
 }

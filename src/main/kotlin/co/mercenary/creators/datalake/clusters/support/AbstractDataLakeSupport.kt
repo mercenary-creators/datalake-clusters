@@ -17,7 +17,6 @@
 package co.mercenary.creators.datalake.clusters.support
 
 import co.mercenary.creators.core.kotlin.*
-import co.mercenary.creators.datalake.clusters.support.db.SQL
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.*
 import org.springframework.jdbc.core.JdbcTemplate
@@ -45,7 +44,7 @@ abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAw
 
     protected fun getWebClient(base: String) = WebClient.create(base)
 
-    protected fun query(@SQL sql: String, key: String = "results") = json(key to jdbc.queryForList(sql))
+    protected fun query(sql: String, key: String = "results", vararg args: Any?) = json(key to jdbc.queryForList(sql, *args))
 
     protected fun <T> timed(block: () -> T): T = timed({ info { it } }, block)
 

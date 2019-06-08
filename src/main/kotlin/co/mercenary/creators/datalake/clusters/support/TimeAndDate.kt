@@ -30,5 +30,5 @@ object TimeAndDate {
     }
 
     @JvmStatic
-    fun getDefaultDateFormat() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS z")
+    fun getDefaultDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS z")
 }
