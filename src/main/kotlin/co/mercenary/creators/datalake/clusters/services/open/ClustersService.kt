@@ -17,19 +17,19 @@
 package co.mercenary.creators.datalake.clusters.services.open
 
 import co.mercenary.creators.core.kotlin.*
-import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeServiceSupport
+import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/open/clusters")
-class ClustersService : AbstractDataLakeServiceSupport() {
+class ClustersService : AbstractDataLakeSupport() {
 
     @GetMapping
-    fun root() = clock { getCachedMappings("/open/clusters") }
+    fun root() = base("/open/clusters", "/roles" to GET, "/todos" to GET)
 
     @GetMapping("/roles")
-    fun roles() = clock { query(sql = "SELECT username, authority FROM authorities") }
+    fun roles() = query(sql = "SELECT username, authority FROM authorities")
 
     @GetMapping("/todos")
-    fun todos() = timed { todosweb.get().retrieve().bodyToFlux<TodoData>() }
+    fun todos() = todosweb.get().retrieve().bodyToFlux<TodoData>()
 }

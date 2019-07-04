@@ -16,19 +16,19 @@
 
 package co.mercenary.creators.datalake.clusters.services.open
 
-import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeServiceSupport
+import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/open/services")
-class ServicesService : AbstractDataLakeServiceSupport() {
+class ServicesService : AbstractDataLakeSupport() {
 
     @GetMapping
-    fun root() = clock { getCachedMappings("/open/services") }
+    fun root() = base("/open/services", "/node" to GET, "/list" to GET)
 
     @GetMapping("/node")
-    fun node() = clock { query(sql = "SELECT * FROM nodes") }
+    fun node() = query(sql = "SELECT * FROM nodes")
 
     @GetMapping("/list")
-    fun list() = clock { query(sql = "SELECT * FROM servers") }
+    fun list() = query(sql = "SELECT * FROM servers")
 }

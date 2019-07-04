@@ -20,6 +20,7 @@ import co.mercenary.creators.core.kotlin.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.*
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.web.bind.annotation.RequestMethod
 
 abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAware {
 
@@ -38,25 +39,28 @@ abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAw
     protected val context: ApplicationContext
         get() = application
 
-    protected val todosweb = getWebClient("http://jsonplaceholder.typicode.com/todos")
+    protected val todosweb = WebClient.create("http://jsonplaceholder.typicode.com/todos")
 
-    protected val postsweb = getWebClient("http://jsonplaceholder.typicode.com/posts")
+    protected val postsweb = WebClient.create("http://jsonplaceholder.typicode.com/posts")
 
     protected fun getWebClient(base: String) = WebClient.create(base)
 
-    protected fun query(sql: String, key: String = "results", vararg args: Any?) = json(key to jdbc.queryForList(sql, *args))
+    protected fun query(sql: String, vararg args: Any?) = json("results" to jdbc.queryForList(sql, *args))
+
+    protected fun base(base: String, vararg args: Pair<String, RequestMethod>) = json("base" to base, "mappings" to (listOf("/" to GET) + listOf(*args)))
 
     protected fun <T> timed(block: () -> T): T = timed({ info { it } }, block)
 
     protected fun clock(name: String = "real_time", block: () -> JSONObject) = NanoTicker().let { tick -> block().also { it[name] = tick(false) } }
 
-    protected fun getEnvironmentProperty(name: String): String? = context.environment.getProperty(name)
-
-    protected fun getEnvironmentPropertyIrElse(name: String, other: String): String = context.environment.getProperty(name, other)
-
-    protected fun getEnvironmentPropertyOrElseCall(name: String, other: () -> String): String = getEnvironmentProperty(name) ?: other()
-
     data class PostData(val userId: Int, val id: Int, val title: String, val body: String)
 
     data class TodoData(val userId: Int, val id: Int, val title: String, val completed: Boolean)
+
+    companion object {
+
+        val GET = RequestMethod.GET
+
+        val POST = RequestMethod.POST
+    }
 }

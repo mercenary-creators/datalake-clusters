@@ -30,11 +30,9 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import java.io.*
 import java.nio.file.Path
-import java.util.concurrent.atomic.*
-import java.util.function.*
 
-@RunWith(SpringRunner::class)
 @SpringBootTest
+@RunWith(SpringRunner::class)
 @TestPropertySource(properties = ["data.lake.redis.bean.name=datalake:test"])
 abstract class AbstractApplicationTests(private val cancel: Boolean = true) : AbstractDataLakeSupport() {
 
@@ -56,6 +54,12 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Ab
             }
         }
     }
+
+    fun getEnvironmentProperty(name: String): String? = context.environment.getProperty(name)
+
+    fun getEnvironmentPropertyIrElse(name: String, other: String): String = context.environment.getProperty(name, other)
+
+    fun getEnvironmentPropertyOrElseCall(name: String, other: () -> String): String = getEnvironmentProperty(name) ?: other()
 
     fun lines(data: URL, action: (String) -> Unit) {
         lines(data.toInputStream(), action)
@@ -121,38 +125,6 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Ab
 
     fun <T : Any> (() -> T?).shouldBe(value: () -> Any?, block: () -> Any?) = assertEquals(value.invoke(), this.invoke(), block)
 
-    fun AtomicLong.shouldBe(value: Long, block: () -> Any?) = assertEquals(value, get(), block)
-
-    fun AtomicLong.shouldBe(value: Int, block: () -> Any?) = assertEquals(value.toLong(), get(), block)
-
-    fun AtomicLong.shouldBe(value: () -> Any?, block: () -> Any?) = assertEquals(value.invoke(), get(), block)
-
-    fun AtomicLong.shouldBe(value: LongSupplier, block: () -> Any?) = assertEquals(value.asLong, get(), block)
-
-    fun AtomicLong.shouldBe(value: IntSupplier, block: () -> Any?) = assertEquals(value.asInt.toLong(), get(), block)
-
-    fun <T : Number> AtomicLong.shouldBe(value: Supplier<T>, block: () -> Any?) = assertEquals(value.get(), get(), block)
-
-    fun AtomicInteger.shouldBe(value: Int, block: () -> Any?) = assertEquals(value, get(), block)
-
-    fun AtomicInteger.shouldBe(value: Long, block: () -> Any?) = assertEquals(value.toInt(), get(), block)
-
-    fun AtomicInteger.shouldBe(value: () -> Any?, block: () -> Any?) = assertEquals(value.invoke(), get(), block)
-
-    fun AtomicInteger.shouldBe(value: IntSupplier, block: () -> Any?) = assertEquals(value.asInt, get(), block)
-
-    fun AtomicInteger.shouldBe(value: LongSupplier, block: () -> Any?) = assertEquals(value.asLong.toInt(), get(), block)
-
-    fun <T : Number> AtomicInteger.shouldBe(value: Supplier<T>, block: () -> Any?) = assertEquals(value.get(), get(), block)
-
-    fun AtomicBoolean.shouldBe(value: Boolean, block: () -> Any?) = assertEquals(value, get(), block)
-
-    fun AtomicBoolean.shouldBe(value: () -> Any?, block: () -> Any?) = assertEquals(value.invoke(), get(), block)
-
-    fun AtomicBoolean.shouldBe(value: Supplier<Boolean>, block: () -> Any?) = assertEquals(value.get(), get(), block)
-
-    fun AtomicBoolean.shouldBe(value: BooleanSupplier, block: () -> Any?) = assertEquals(value.asBoolean, get(), block)
-
     fun ByteArray?.shouldBe(value: ByteArray?, block: () -> Any?) = assertEquals(value, this, block)
 
     fun <T : Any?> List<T>.shouldNotBe(value: Iterable<*>?, block: () -> Any?) = assertNotEquals(value?.toList(), this, block)
@@ -162,40 +134,4 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Ab
     fun <T : Any> (() -> T?).shouldNotBe(value: Any?, block: () -> Any?) = assertNotEquals(value, this.invoke(), block)
 
     fun <T : Any> (() -> T?).shouldNotBe(value: () -> Any?, block: () -> Any?) = assertNotEquals(value.invoke(), this.invoke(), block)
-
-    fun AtomicLong.shouldNotBe(value: Long, block: () -> Any?) = assertNotEquals(value, get(), block)
-
-    fun AtomicLong.shouldNotBe(value: Int, block: () -> Any?) = assertNotEquals(value.toLong(), get(), block)
-
-    fun AtomicLong.shouldNotBe(value: () -> Any?, block: () -> Any?) = assertNotEquals(value.invoke(), get(), block)
-
-    fun AtomicLong.shouldNotBe(value: LongSupplier, block: () -> Any?) = assertNotEquals(value.asLong, get(), block)
-
-    fun AtomicLong.shouldNotBe(value: IntSupplier, block: () -> Any?) = assertNotEquals(value.asInt.toLong(), get(), block)
-
-    fun <T : Number> AtomicLong.shouldNotBe(value: Supplier<T>, block: () -> Any?) = assertNotEquals(value.get(), get(), block)
-
-    fun AtomicInteger.shouldNotBe(value: Int, block: () -> Any?) = assertNotEquals(value, get(), block)
-
-    fun AtomicInteger.shouldNotBe(value: Long, block: () -> Any?) = assertNotEquals(value.toInt(), get(), block)
-
-    fun AtomicInteger.shouldNotBe(value: () -> Any?, block: () -> Any?) = assertNotEquals(value.invoke(), get(), block)
-
-    fun AtomicInteger.shouldNotBe(value: IntSupplier, block: () -> Any?) = assertNotEquals(value.asInt, get(), block)
-
-    fun AtomicInteger.shouldNotBe(value: LongSupplier, block: () -> Any?) = assertNotEquals(value.asLong.toInt(), get(), block)
-
-    fun <T : Number> AtomicInteger.shouldNotBe(value: Supplier<T>, block: () -> Any?) = assertNotEquals(value.get(), get(), block)
-
-    fun AtomicBoolean.shouldNotBe(value: Boolean, block: () -> Any?) = assertNotEquals(value, get(), block)
-
-    fun AtomicBoolean.shouldNotBe(value: () -> Any?, block: () -> Any?) = assertNotEquals(value.invoke(), get(), block)
-
-    fun AtomicBoolean.shouldNotBe(value: Supplier<Boolean>, block: () -> Any?) = assertNotEquals(value.get(), get(), block)
-
-    fun AtomicBoolean.shouldNotBe(value: BooleanSupplier, block: () -> Any?) = assertNotEquals(value.asBoolean, get(), block)
-
-    fun Double.shouldBeClose(value: Double, block: () -> Any?) = assertTrue((Math.abs(this - value) < 0.000001), block)
-
-    fun Double.shouldBeClose(value: Double, delta: Double, block: () -> Any?) = assertTrue((Math.abs(this - value) < delta), block)
 }
