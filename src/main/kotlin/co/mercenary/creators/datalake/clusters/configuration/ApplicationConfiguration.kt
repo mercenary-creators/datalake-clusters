@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.datalake.clusters.configuration
 
-import co.mercenary.creators.core.kotlin.json.module.CoreKotlinModule
+import co.mercenary.creators.kotlin.json.module.MercenaryKotlinModule
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
@@ -34,7 +34,7 @@ class ApplicationConfiguration : WebMvcConfigurer {
     fun datalakeJackson() = Jackson2ObjectMapperBuilderCustomizer { jackson ->
         jackson.featuresToEnable(JsonGenerator.Feature.ESCAPE_NON_ASCII)
             .simpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS z").timeZone("UTC")
-            .modulesToInstall(CoreKotlinModule(), ParameterNamesModule())
+            .modulesToInstall(MercenaryKotlinModule(), ParameterNamesModule())
     }
 
     override fun configureContentNegotiation(configurer: ContentNegotiationConfigurer) {

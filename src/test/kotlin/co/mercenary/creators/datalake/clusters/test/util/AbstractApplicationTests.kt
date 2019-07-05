@@ -16,8 +16,8 @@
 
 package co.mercenary.creators.datalake.clusters.test.util
 
-import co.mercenary.creators.core.kotlin.*
 import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
+import co.mercenary.creators.kotlin.util.toSafeString
 import org.junit.Before
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.function.Executable
@@ -28,8 +28,6 @@ import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProc
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
-import java.io.*
-import java.nio.file.Path
 
 @SpringBootTest
 @RunWith(SpringRunner::class)
@@ -60,26 +58,6 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Ab
     fun getEnvironmentPropertyIrElse(name: String, other: String): String = context.environment.getProperty(name, other)
 
     fun getEnvironmentPropertyOrElseCall(name: String, other: () -> String): String = getEnvironmentProperty(name) ?: other()
-
-    fun lines(data: URL, action: (String) -> Unit) {
-        lines(data.toInputStream(), action)
-    }
-
-    fun lines(data: Path, action: (String) -> Unit) {
-        lines(data.toFile(), action)
-    }
-
-    fun lines(data: File, action: (String) -> Unit) {
-        data.forEachLine(Charsets.UTF_8, action)
-    }
-
-    fun lines(data: Resource, action: (String) -> Unit) {
-        data.toInputStream().toReader(Charsets.UTF_8).forEachLine(action)
-    }
-
-    fun lines(data: InputStream = System.`in`, action: (String) -> Unit) {
-        data.toReader(Charsets.UTF_8).forEachLine(action)
-    }
 
     fun assertEach(vararg list: Executable) {
         if (list.isNotEmpty()) {
