@@ -32,17 +32,13 @@ import javax.sql.DataSource
 @EnableRedisHttpSession(redisNamespace = "datalake:session", redisFlushMode = RedisFlushMode.IMMEDIATE)
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
-    private val encoder: PasswordEncoder by lazy {
-        BCryptPasswordEncoder(12, SecureRandom())
-    }
-
     @Autowired
     fun configureAuthentication(conf: AuthenticationManagerBuilder, pass: PasswordEncoder, data: DataSource) {
         conf.jdbcAuthentication().dataSource(data).passwordEncoder(pass)
     }
 
     @Bean
-    fun passwordEncoder() = encoder
+    fun passwordEncoder() = BCryptPasswordEncoder(12, SecureRandom())
 
     override fun configure(conf: HttpSecurity) {
         conf.authorizeRequests().antMatchers("/open/**").permitAll().antMatchers("/user/**").hasAuthority("USER").and().httpBasic().and().csrf().disable()

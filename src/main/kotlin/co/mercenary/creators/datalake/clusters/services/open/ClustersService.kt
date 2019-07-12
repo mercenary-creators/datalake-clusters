@@ -18,18 +18,17 @@ package co.mercenary.creators.datalake.clusters.services.open
 
 import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.reactive.function.client.bodyToFlux
 
 @RestController
 @RequestMapping("/open/clusters")
 class ClustersService : AbstractDataLakeSupport() {
 
     @GetMapping
-    fun root() = base("/open/clusters", "/roles" to GET, "/todos" to GET)
+    fun root() = timed { base("/open/clusters", "/roles" to GET, "/todos" to GET) }
 
     @GetMapping("/roles")
-    fun roles() = query(sql = "SELECT username, authority FROM authorities")
+    fun roles() = timed { query("SELECT username, authority FROM authorities") }
 
     @GetMapping("/todos")
-    fun todos() = todosweb.get().retrieve().bodyToFlux<TodoData>()
+    fun todos() = timed { getFlux<TodoData>(todosweb) }
 }

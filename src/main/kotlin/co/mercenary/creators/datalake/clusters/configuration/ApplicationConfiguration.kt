@@ -17,12 +17,10 @@
 package co.mercenary.creators.datalake.clusters.configuration
 
 import co.mercenary.creators.kotlin.json.module.MercenaryKotlinModule
-import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
 import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.annotation.*
-import org.springframework.http.MediaType
 import org.springframework.web.servlet.config.annotation.*
 import org.springframework.web.servlet.resource.PathResourceResolver
 
@@ -31,14 +29,8 @@ import org.springframework.web.servlet.resource.PathResourceResolver
 class ApplicationConfiguration : WebMvcConfigurer {
 
     @Bean
-    fun datalakeJackson() = Jackson2ObjectMapperBuilderCustomizer { jackson ->
-        jackson.featuresToEnable(JsonGenerator.Feature.ESCAPE_NON_ASCII)
-            .simpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS z").timeZone("UTC")
-            .modulesToInstall(MercenaryKotlinModule(), ParameterNamesModule())
-    }
-
-    override fun configureContentNegotiation(configurer: ContentNegotiationConfigurer) {
-        configurer.defaultContentType(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON_UTF8)
+    fun datalakeJackson() = Jackson2ObjectMapperBuilderCustomizer {
+        it.simpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS z").timeZone("UTC").modulesToInstall(MercenaryKotlinModule(), ParameterNamesModule())
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {

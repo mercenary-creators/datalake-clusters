@@ -16,16 +16,16 @@
 
 package co.mercenary.creators.datalake.clusters.support
 
-import co.mercenary.creators.kotlin.*
-import co.mercenary.creators.kotlin.util.time.NanoTicker
+import co.mercenary.creators.kotlin.json
+import co.mercenary.creators.kotlin.json.JSONAware
 import co.mercenary.creators.kotlin.util.timed
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.*
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.*
 
-abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAware {
+abstract class AbstractDataLakeSupport : mu.KLogging(), ApplicationContextAware {
 
     @Autowired
     private lateinit var template: JdbcTemplate
@@ -46,7 +46,7 @@ abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAw
 
     protected val postsweb = WebClient.create("http://jsonplaceholder.typicode.com/posts")
 
-    protected fun getWebClient(base: String) = WebClient.create(base)
+    protected inline fun <reified T : Any> getFlux(web: WebClient) = web.get().retrieve().bodyToFlux<T>()
 
     protected fun query(sql: String, vararg args: Any?) = json("results" to jdbc.queryForList(sql, *args))
 
@@ -54,16 +54,39 @@ abstract class AbstractDataLakeSupport : AbstractLogging(), ApplicationContextAw
 
     protected fun <T> timed(block: () -> T): T = timed({ info { it } }, block)
 
-    protected fun clock(name: String = "real_time", block: () -> JSONObject) = NanoTicker().let { tick -> block().also { it[name] = tick(false) } }
+    fun info(block: () -> Any?) {
+        logger.info(block)
+    }
 
-    data class PostData(val userId: Int, val id: Int, val title: String, val body: String)
+    fun warn(block: () -> Any?) {
+        logger.warn(block)
+    }
 
-    data class TodoData(val userId: Int, val id: Int, val title: String, val completed: Boolean)
+    fun debug(block: () -> Any?) {
+        logger.debug(block)
+    }
+
+    fun debug(cause: Throwable, block: () -> Any?) {
+        logger.debug(cause, block)
+    }
+
+    fun error(block: () -> Any?) {
+        logger.error(block)
+    }
+
+    fun error(cause: Throwable, block: () -> Any?) {
+        logger.error(cause, block)
+    }
+
+    data class PostData(val userId: Int, val id: Int, val title: String, val body: String) : JSONAware {
+        override fun toString() = toJSONString()
+    }
+
+    data class TodoData(val userId: Int, val id: Int, val title: String, val completed: Boolean) : JSONAware {
+        override fun toString() = toJSONString()
+    }
 
     companion object {
-
         val GET = RequestMethod.GET
-
-        val POST = RequestMethod.POST
     }
 }

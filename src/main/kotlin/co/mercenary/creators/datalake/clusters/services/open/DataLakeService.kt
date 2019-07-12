@@ -18,18 +18,17 @@ package co.mercenary.creators.datalake.clusters.services.open
 
 import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.reactive.function.client.bodyToFlux
 
 @RestController
 @RequestMapping("/open/datalake")
 class DataLakeService : AbstractDataLakeSupport() {
 
     @GetMapping
-    fun root() = base("/open/datalake", "/posts" to GET, "/users" to GET)
+    fun root() = timed { base("/open/datalake", "/posts" to GET, "/users" to GET) }
 
     @GetMapping("/posts")
-    fun posts() = postsweb.get().retrieve().bodyToFlux<PostData>()
+    fun posts() = timed { getFlux<PostData>(postsweb) }
 
     @GetMapping("/users")
-    fun users() = query(sql = "SELECT username, enabled FROM users")
+    fun users() = timed { query("SELECT username, enabled FROM users") }
 }

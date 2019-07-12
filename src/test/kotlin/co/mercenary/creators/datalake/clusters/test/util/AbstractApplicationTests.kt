@@ -35,13 +35,13 @@ import org.springframework.test.context.junit4.SpringRunner
 abstract class AbstractApplicationTests(private val cancel: Boolean = true) : AbstractDataLakeSupport() {
 
     @Autowired
-    private lateinit var pencoders: PasswordEncoder
+    private lateinit var pass: PasswordEncoder
 
     @Autowired
     private lateinit var scheduled: ScheduledAnnotationBeanPostProcessor
 
     protected val encoder: PasswordEncoder
-        get() = pencoders
+        get() = pass
 
     @Before
     fun startup__() {
