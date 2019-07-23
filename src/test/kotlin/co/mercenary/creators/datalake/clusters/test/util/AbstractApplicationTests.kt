@@ -53,12 +53,6 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Ab
         }
     }
 
-    fun getEnvironmentProperty(name: String): String? = context.environment.getProperty(name)
-
-    fun getEnvironmentPropertyIrElse(name: String, other: String): String = context.environment.getProperty(name, other)
-
-    fun getEnvironmentPropertyOrElseCall(name: String, other: () -> String): String = getEnvironmentProperty(name) ?: other()
-
     fun assertEach(vararg list: Executable) {
         if (list.isNotEmpty()) {
             Assertions.assertAll(*list)

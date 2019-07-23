@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/open/clusters")
 class ClustersService : AbstractDataLakeSupport() {
 
-    @GetMapping
-    fun root() = timed { base("/open/clusters", "/roles" to GET, "/todos" to GET) }
-
     @GetMapping("/roles")
     fun roles() = timed { query("SELECT username, authority FROM authorities") }
 

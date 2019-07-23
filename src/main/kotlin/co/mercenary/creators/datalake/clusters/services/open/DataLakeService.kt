@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/open/datalake")
 class DataLakeService : AbstractDataLakeSupport() {
 
-    @GetMapping
-    fun root() = timed { base("/open/datalake", "/posts" to GET, "/users" to GET) }
-
     @GetMapping("/posts")
     fun posts() = timed { getFlux<PostData>(postsweb) }
 

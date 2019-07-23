@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/open/services")
 class ServicesService : AbstractDataLakeSupport() {
 
-    @GetMapping
-    fun root() = timed { base("/open/services", "/node" to GET, "/list" to GET) }
-
     @GetMapping("/node")
     fun node() = timed { query("SELECT * FROM nodes") }
 

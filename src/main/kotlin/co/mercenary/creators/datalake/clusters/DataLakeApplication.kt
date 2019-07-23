@@ -16,12 +16,12 @@
 
 package co.mercenary.creators.datalake.clusters
 
+import co.mercenary.creators.kotlin.boot.boot
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class DataLakeApplication
 
 fun main(args: Array<String>) {
-    runApplication<DataLakeApplication>(*args)
+    boot<DataLakeApplication>(*args)
 }
