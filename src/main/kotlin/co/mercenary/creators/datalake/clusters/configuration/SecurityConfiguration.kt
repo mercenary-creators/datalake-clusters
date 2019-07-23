@@ -18,6 +18,7 @@ package co.mercenary.creators.datalake.clusters.configuration
 
 import co.mercenary.creators.kotlin.boot.SecurePasswordEncoder
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -40,6 +41,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     fun passwordEncoder() = SecurePasswordEncoder()
 
     override fun configure(conf: HttpSecurity) {
-        conf.authorizeRequests().antMatchers("/open/**").permitAll().antMatchers("/user/**").hasAuthority("USER").and().httpBasic().and().csrf().disable()
+        conf.authorizeRequests().antMatchers("/open/**").permitAll().antMatchers("/user/**").hasAuthority("USER").requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
     }
 }
