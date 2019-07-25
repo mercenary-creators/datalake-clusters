@@ -66,11 +66,6 @@ dependencies {
     implementation 'org.springframework.session:spring-session-data-redis'
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '3.3.1'
     implementation group: 'com.intellij', name: 'annotations', version: '12.0'
-    implementation(group: 'io.github.microutils', name: 'kotlin-logging', version: '1.6.26')
-    implementation(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26')
-    implementation(group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.26')
-    implementation(group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.26')
-    implementation(group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3')
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
