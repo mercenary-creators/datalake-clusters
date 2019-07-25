@@ -16,20 +16,14 @@
 
 package co.mercenary.creators.datalake.clusters.configuration
 
-import co.mercenary.creators.kotlin.boot.getDefaultJackson2ObjectMapperBuilderCustomizer
+import co.mercenary.creators.kotlin.boot.DefaultWebConfig
 import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.annotation.*
-import org.springframework.web.servlet.config.annotation.*
-import org.springframework.web.servlet.resource.PathResourceResolver
 
 @Configuration
 @ServletComponentScan
-class ApplicationConfiguration : WebMvcConfigurer {
+class ApplicationConfiguration : DefaultWebConfig {
 
     @Bean
     fun datalakeJackson() = getDefaultJackson2ObjectMapperBuilderCustomizer()
-
-    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(3600).resourceChain(true).addResolver(PathResourceResolver())
-    }
 }

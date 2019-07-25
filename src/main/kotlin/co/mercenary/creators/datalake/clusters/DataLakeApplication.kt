@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.datalake.clusters
 
-import co.mercenary.creators.kotlin.boot.boot
+import co.mercenary.creators.kotlin.boot.*
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication

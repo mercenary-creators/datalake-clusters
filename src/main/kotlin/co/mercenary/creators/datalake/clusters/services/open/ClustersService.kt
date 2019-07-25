@@ -17,6 +17,7 @@
 package co.mercenary.creators.datalake.clusters.services.open
 
 import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
+import co.mercenary.creators.kotlin.json.util.typicode.TodoData
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.*
 class ClustersService : AbstractDataLakeSupport() {
 
     @GetMapping("/roles")
-    fun roles() = timed { query("SELECT username, authority FROM authorities") }
+    fun roles() = query("SELECT username, authority FROM authorities")
 
     @GetMapping("/todos")
-    fun todos() = timed { getFlux<TodoData>(todosweb) }
+    fun todos() = getWebFlux<TodoData>(TodoData.BASE_PATH).limitRequest(10L)
 }

@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.*
 class ServicesService : AbstractDataLakeSupport() {
 
     @GetMapping("/node")
-    fun node() = timed { query("SELECT * FROM nodes") }
+    fun node() = query("SELECT * FROM nodes")
 
     @GetMapping("/list")
-    fun list() = timed { query("SELECT * FROM servers") }
+    fun list() = query("SELECT * FROM servers")
 }

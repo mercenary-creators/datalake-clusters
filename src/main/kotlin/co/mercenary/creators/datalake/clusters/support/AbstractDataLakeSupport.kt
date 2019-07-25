@@ -20,7 +20,6 @@ import co.mercenary.creators.kotlin.boot.AbstractApplicationSupport
 import co.mercenary.creators.kotlin.json
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.web.reactive.function.client.*
 
 abstract class AbstractDataLakeSupport : AbstractApplicationSupport() {
 
@@ -30,15 +29,5 @@ abstract class AbstractDataLakeSupport : AbstractApplicationSupport() {
     protected val jdbc: JdbcTemplate
         get() = template
 
-    protected val todosweb = WebClient.create("http://jsonplaceholder.typicode.com/todos")
-
-    protected val postsweb = WebClient.create("http://jsonplaceholder.typicode.com/posts")
-
-    protected inline fun <reified T : Any> getFlux(web: WebClient) = web.get().retrieve().bodyToFlux<T>()
-
     protected fun query(sql: String, vararg args: Any?) = json("results" to jdbc.queryForList(sql, *args))
-
-    data class PostData(val userId: Int, val id: Int, val title: String, val body: String)
-
-    data class TodoData(val userId: Int, val id: Int, val title: String, val completed: Boolean)
 }
