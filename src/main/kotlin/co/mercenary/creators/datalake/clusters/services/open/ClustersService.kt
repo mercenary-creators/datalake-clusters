@@ -28,5 +28,5 @@ class ClustersService : AbstractDataLakeSupport() {
     fun roles() = query("SELECT username, authority FROM authorities")
 
     @GetMapping("/todos")
-    fun todos() = getWebFlux<TodoData>(TodoData.BASE_PATH).limitRequest(10L)
+    fun todos() = getWebFlux<TodoData>(TodoData.BASE_PATH).limitRequest(10L).cache()
 }

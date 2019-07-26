@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/open/datalake")
 class DataLakeService : AbstractDataLakeSupport() {
 
-    @GetMapping("/posts")
-    fun posts() = getWebFlux<PostData>(PostData.BASE_PATH).limitRequest(10L)
-
     @GetMapping("/users")
     fun users() = query("SELECT username, enabled FROM users")
+
+    @GetMapping("/posts")
+    fun posts() = getWebFlux<PostData>(PostData.BASE_PATH).limitRequest(10L).cache()
 }
