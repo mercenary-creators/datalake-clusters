@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package co.mercenary.creators.datalake.clusters.services.open
+package co.mercenary.creators.datalake.clusters.support
 
-import co.mercenary.creators.datalake.clusters.support.DataLakeSupport
-import org.springframework.web.bind.annotation.*
+import co.mercenary.creators.kotlin.boot.DEFAULT_JSON_RESULTS_NAME
+import co.mercenary.creators.kotlin.boot.data.AbstractApplicationDataSupport
 
-@RestController
-@RequestMapping("/open/services")
-class ServicesService : DataLakeSupport() {
-
-    @GetMapping("/node")
-    fun node() = query("SELECT * FROM nodes")
-
-    @GetMapping("/list")
-    fun list() = query("SELECT * FROM servers")
+open class DataLakeSupport(results: String = DEFAULT_JSON_RESULTS_NAME) : AbstractApplicationDataSupport(results) {
 }

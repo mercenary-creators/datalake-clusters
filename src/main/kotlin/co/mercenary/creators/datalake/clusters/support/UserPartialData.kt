@@ -16,18 +16,4 @@
 
 package co.mercenary.creators.datalake.clusters.support
 
-import co.mercenary.creators.kotlin.boot.AbstractApplicationSupport
-import co.mercenary.creators.kotlin.json
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.jdbc.core.JdbcTemplate
-
-abstract class AbstractDataLakeSupport : AbstractApplicationSupport() {
-
-    @Autowired
-    private lateinit var template: JdbcTemplate
-
-    protected val jdbc: JdbcTemplate
-        get() = template
-
-    protected fun query(sql: String, vararg args: Any?) = json("results" to jdbc.queryForList(sql, *args))
-}
+data class UserPartialData(val username: String, val enabled: Boolean)

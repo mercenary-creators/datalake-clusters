@@ -16,16 +16,16 @@
 
 package co.mercenary.creators.datalake.clusters.services.open
 
-import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
+import co.mercenary.creators.datalake.clusters.support.*
 import co.mercenary.creators.kotlin.json.util.typicode.PostData
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/open/datalake")
-class DataLakeService : AbstractDataLakeSupport() {
+class DataLakeService : DataLakeSupport() {
 
     @GetMapping("/users")
-    fun users() = query("SELECT username, enabled FROM users")
+    fun users() = queryOf<UserPartialData>("SELECT username, enabled FROM users")
 
     @GetMapping("/posts")
     fun posts() = getWebFlux<PostData>(PostData.BASE_PATH).limitRequest(10L).cache()

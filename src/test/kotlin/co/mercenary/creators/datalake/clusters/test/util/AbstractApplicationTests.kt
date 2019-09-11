@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.datalake.clusters.test.util
 
-import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
+import co.mercenary.creators.datalake.clusters.support.DataLakeSupport
 import co.mercenary.creators.kotlin.util.toSafeString
 import org.junit.Before
 import org.junit.jupiter.api.*
@@ -32,7 +32,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest
 @RunWith(SpringRunner::class)
 @TestPropertySource(properties = ["data.lake.redis.bean.name=datalake:test"])
-abstract class AbstractApplicationTests(private val cancel: Boolean = true) : AbstractDataLakeSupport() {
+abstract class AbstractApplicationTests(private val cancel: Boolean = true) : DataLakeSupport() {
 
     @Autowired
     private lateinit var password: PasswordEncoder

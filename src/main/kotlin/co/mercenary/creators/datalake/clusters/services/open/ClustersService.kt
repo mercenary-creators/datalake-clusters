@@ -16,13 +16,13 @@
 
 package co.mercenary.creators.datalake.clusters.services.open
 
-import co.mercenary.creators.datalake.clusters.support.AbstractDataLakeSupport
+import co.mercenary.creators.datalake.clusters.support.DataLakeSupport
 import co.mercenary.creators.kotlin.json.util.typicode.TodoData
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/open/clusters")
-class ClustersService : AbstractDataLakeSupport() {
+class ClustersService : DataLakeSupport() {
 
     @GetMapping("/roles")
     fun roles() = query("SELECT username, authority FROM authorities")
