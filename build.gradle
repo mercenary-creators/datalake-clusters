@@ -35,7 +35,7 @@ repositories {
 ext {
     set('JACKSON_DATA_BIND_VERSION', '2.9.9')
     set('MERCENARY_CREATORS_BOOT_VERSION', '7.0.0-SNAPSHOT')
-    set('DATALAKE_CLUSTERS_UI_VERSION', '0.4.5-SNAPSHOT')
+    set('DATALAKE_CLUSTERS_UI_VERSION', '0.4.9-SNAPSHOT')
 }
 
 dependencies {

@@ -16,17 +16,16 @@
 
 package co.mercenary.creators.datalake.clusters.services.open
 
-import co.mercenary.creators.datalake.clusters.support.DataLakeSupport
-import co.mercenary.creators.kotlin.json.util.typicode.TodoData
+import co.mercenary.creators.datalake.clusters.support.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/open/clusters")
 class ClustersService : DataLakeSupport() {
 
+    @GetMapping("/todos")
+    fun todos() = getWebFlux<TodoData>(TodoData.BASE_PATH).keep(10)
+
     @GetMapping("/roles")
     fun roles() = query("SELECT username, authority FROM authorities")
-
-    @GetMapping("/todos")
-    fun todos() = getWebFlux<TodoData>(TodoData.BASE_PATH).limitRequest(10L).cache()
 }

@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
+@file:kotlin.jvm.JvmName("SupportKt")
+
 package co.mercenary.creators.datalake.clusters.support
 
+import reactor.core.publisher.Flux
+
+typealias PostData = co.mercenary.creators.kotlin.json.util.typicode.PostData
+
+typealias TodoData = co.mercenary.creators.kotlin.json.util.typicode.TodoData
+
+typealias DataLakeSupport = co.mercenary.creators.kotlin.boot.data.AbstractApplicationDataSupport
+
 data class UserPartialData(val username: String, val enabled: Boolean)
+
+fun <T : Any> Flux<T>.keep(size: Int): Flux<T> = this.limitRequest(size.toLong()).cache()
