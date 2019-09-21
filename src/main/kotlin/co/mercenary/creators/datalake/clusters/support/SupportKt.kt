@@ -20,9 +20,9 @@ package co.mercenary.creators.datalake.clusters.support
 
 import reactor.core.publisher.Flux
 
-typealias PostData = co.mercenary.creators.kotlin.json.util.typicode.PostData
+typealias TypicodePostData = co.mercenary.creators.kotlin.json.util.typicode.TypicodePostData
 
-typealias TodoData = co.mercenary.creators.kotlin.json.util.typicode.TodoData
+typealias TypicodeTodoData = co.mercenary.creators.kotlin.json.util.typicode.TypicodeTodoData
 
 typealias DataLakeSupport = co.mercenary.creators.kotlin.boot.data.AbstractApplicationDataSupport
 

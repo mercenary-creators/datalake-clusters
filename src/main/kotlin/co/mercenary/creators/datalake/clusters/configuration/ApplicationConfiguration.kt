@@ -16,25 +16,10 @@
 
 package co.mercenary.creators.datalake.clusters.configuration
 
-import co.mercenary.creators.kotlin.json.module.MercenaryKotlinModule
-import co.mercenary.creators.kotlin.util.time.TimeAndDate
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
+import co.mercenary.creators.kotlin.boot.AbstractApplicationConfiguration
 import org.springframework.boot.web.servlet.ServletComponentScan
-import org.springframework.context.annotation.*
-import org.springframework.web.servlet.config.annotation.*
-import org.springframework.web.servlet.resource.PathResourceResolver
+import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ServletComponentScan
-class ApplicationConfiguration : WebMvcConfigurer {
-
-    @Bean
-    fun datalakeJackson() = Jackson2ObjectMapperBuilderCustomizer {
-        it.dateFormat(TimeAndDate.getDefaultDateFormat()).timeZone(TimeAndDate.getDefaultTimeZone()).modulesToInstall(MercenaryKotlinModule(), ParameterNamesModule())
-    }
-
-    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(3600).resourceChain(true).addResolver(PathResourceResolver())
-    }
-}
+class ApplicationConfiguration : AbstractApplicationConfiguration()
