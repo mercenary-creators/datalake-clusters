@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/open/clusters")
 class ClustersService : DataLakeSupport() {
 
+    @GetMapping("/todos")
+    fun todos() = getWebFlux<TodoData>(TodoData.path()).keep(10)
+
     @GetMapping("/roles")
     fun roles() = query("SELECT username, authority FROM authorities")
-
-    @GetMapping("/todos")
-    fun todos() = getWebFlux<TypicodeTodoData>(TypicodeTodoData.BASE_PATH).keep(10)
 }

@@ -20,12 +20,12 @@ package co.mercenary.creators.datalake.clusters.support
 
 import reactor.core.publisher.Flux
 
-typealias TypicodePostData = co.mercenary.creators.kotlin.json.util.typicode.TypicodePostData
+typealias PostData = co.mercenary.creators.kotlin.json.util.typicode.TypicodePostData
 
-typealias TypicodeTodoData = co.mercenary.creators.kotlin.json.util.typicode.TypicodeTodoData
+typealias TodoData = co.mercenary.creators.kotlin.json.util.typicode.TypicodeTodoData
 
 typealias DataLakeSupport = co.mercenary.creators.kotlin.boot.data.AbstractApplicationDataSupport
 
 data class UserPartialData(val username: String, val enabled: Boolean)
 
-fun <T : Any> Flux<T>.keep(size: Int): Flux<T> = this.limitRequest(size.toLong()).cache()
+fun <T : Any> Flux<T>.keep(size: Int): Flux<T> = limitRequest(size.toLong()).cache()
