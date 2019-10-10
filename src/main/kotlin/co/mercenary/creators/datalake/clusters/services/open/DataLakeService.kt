@@ -27,5 +27,5 @@ class DataLakeService : DataLakeSupport() {
     fun posts() = getWebFlux<PostData>(PostData.path()).keep(10)
 
     @GetMapping("/users")
-    fun users() = queryOf<UserPartialData>("SELECT username, enabled FROM users")
+    fun users() = queryListOf<UserPartialData>("SELECT username, enabled FROM users")
 }

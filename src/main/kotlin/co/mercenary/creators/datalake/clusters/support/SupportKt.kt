@@ -19,6 +19,7 @@
 package co.mercenary.creators.datalake.clusters.support
 
 import reactor.core.publisher.Flux
+import java.time.Duration
 
 typealias PostData = co.mercenary.creators.kotlin.json.util.typicode.TypicodePostData
 
@@ -28,4 +29,4 @@ typealias DataLakeSupport = co.mercenary.creators.kotlin.boot.data.AbstractAppli
 
 data class UserPartialData(val username: String, val enabled: Boolean)
 
-fun <T : Any> Flux<T>.keep(size: Int): Flux<T> = limitRequest(size.toLong()).cache()
+fun <T : Any> Flux<T>.keep(size: Int): Flux<T> = limitRequest(size.toLong()).cache(Duration.ofHours(1L))

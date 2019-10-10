@@ -27,5 +27,5 @@ class ClustersService : DataLakeSupport() {
     fun todos() = getWebFlux<TodoData>(TodoData.path()).keep(10)
 
     @GetMapping("/roles")
-    fun roles() = query("SELECT username, authority FROM authorities")
+    fun roles() = queryList("SELECT username, authority FROM authorities")
 }

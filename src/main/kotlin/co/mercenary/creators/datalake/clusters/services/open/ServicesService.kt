@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.*
 class ServicesService : DataLakeSupport() {
 
     @GetMapping("/node")
-    fun node() = query("SELECT * FROM nodes")
+    fun node() = queryList("SELECT * FROM nodes")
 
     @GetMapping("/list")
-    fun list() = query("SELECT * FROM servers")
+    fun list() = queryList("SELECT * FROM servers")
 }
