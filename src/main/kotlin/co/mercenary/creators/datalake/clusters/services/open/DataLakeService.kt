@@ -17,6 +17,7 @@
 package co.mercenary.creators.datalake.clusters.services.open
 
 import co.mercenary.creators.datalake.clusters.support.*
+import co.mercenary.creators.kotlin.util.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*
 class DataLakeService : DataLakeSupport() {
 
     @GetMapping("/posts")
-    fun posts() = getWebFlux<PostData>(PostData.path()).keep(10)
+    fun posts() = getWebFlux<PostData>(PostData.path()).limit(10).cache(8.hours)
 
     @GetMapping("/users")
     fun users() = queryListOf<UserPartialData>("SELECT username, enabled FROM users")
