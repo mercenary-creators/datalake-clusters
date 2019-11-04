@@ -20,11 +20,10 @@ import co.mercenary.creators.kotlin.boot.data.AbstractDataSecurityConfiguration
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.session.data.redis.RedisFlushMode
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 
 @EnableWebSecurity
-@EnableRedisHttpSession(redisNamespace = "datalake:session", redisFlushMode = RedisFlushMode.IMMEDIATE)
+@EnableRedisHttpSession(redisNamespace = "datalake:session")
 class SecurityConfiguration : AbstractDataSecurityConfiguration() {
     override fun configure(conf: HttpSecurity) {
         conf.authorizeRequests().antMatchers("/open/**").permitAll().antMatchers("/user/**").hasAuthority("USER").requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
