@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*
 class DataLakeService : DataLakeSupport() {
 
     @GetMapping("/posts")
-    fun posts() = getWebFlux<PostData>(PostData.path()).limit(15).cache()
+    fun posts() = getWebFlux<PostData>(PostData.path()).limit(15)
 
     @GetMapping("/users")
     fun users() = queryListOf<UserPartialData>("SELECT username, enabled FROM users")
