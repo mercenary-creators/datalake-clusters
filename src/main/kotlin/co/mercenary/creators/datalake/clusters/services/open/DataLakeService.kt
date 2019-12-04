@@ -24,17 +24,17 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/open/datalake")
 class DataLakeService : DataLakeSupport() {
 
-    @GetMapping("/posts")
-    fun posts() = getWebFlux<PostData>(PostData.path()).limit(15)
-
-    @GetMapping("/todos")
-    fun todos() = getWebFlux<TodoData>(TodoData.path()).limit(15)
-
     @GetMapping("/node")
     fun node() = queryList("SELECT * FROM nodes")
 
     @GetMapping("/list")
     fun list() = queryList("SELECT * FROM servers")
+
+    @GetMapping("/posts")
+    fun posts() = getWebFlux<PostData>(PostData.path()).limit(15)
+
+    @GetMapping("/todos")
+    fun todos() = getWebFlux<TodoData>(TodoData.path()).limit(15)
 
     @GetMapping("/roles")
     fun roles() = queryList("SELECT username, authority FROM authorities")

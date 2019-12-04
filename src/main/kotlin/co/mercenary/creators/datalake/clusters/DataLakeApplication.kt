@@ -22,6 +22,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 @SpringBootApplication
 class DataLakeApplication
 
-fun main(args: Array<String>) {
-    boot<DataLakeApplication>(*args)
+fun main() {
+    boot<DataLakeApplication>()
 }
