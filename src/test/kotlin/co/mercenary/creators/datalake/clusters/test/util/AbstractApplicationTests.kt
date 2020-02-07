@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ * Copyright (c) 2020, Mercenary Creators Company. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,11 @@ package co.mercenary.creators.datalake.clusters.test.util
 
 import co.mercenary.creators.datalake.clusters.support.DataLakeSupport
 import co.mercenary.creators.kotlin.util.toSafeString
-import org.junit.Before
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.function.Executable
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
@@ -37,21 +35,8 @@ abstract class AbstractApplicationTests(private val cancel: Boolean = true) : Da
     @Autowired
     private lateinit var password: PasswordEncoder
 
-    @Autowired
-    private lateinit var scheduled: ScheduledAnnotationBeanPostProcessor
-
     protected val encoder: PasswordEncoder
         get() = password
-
-    @Before
-    fun startup__() {
-        if (cancel) {
-            scheduled.setApplicationContext(context)
-            scheduled.scheduledTasks.forEach {
-                it.cancel()
-            }
-        }
-    }
 
     fun assertEach(vararg list: Executable) {
         if (list.isNotEmpty()) {
