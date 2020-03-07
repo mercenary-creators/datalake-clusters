@@ -19,7 +19,6 @@
 package co.mercenary.creators.datalake.clusters.support
 
 import org.springframework.beans.factory.BeanFactory
-import org.springframework.security.crypto.password.PasswordEncoder
 
 typealias PostData = co.mercenary.creators.kotlin.json.util.typicode.TypicodePostData
 
@@ -27,10 +26,8 @@ typealias TodoData = co.mercenary.creators.kotlin.json.util.typicode.TypicodeTod
 
 typealias DataLakeSupport = co.mercenary.creators.kotlin.boot.data.AbstractApplicationDataSupport
 
-data class UserPartialData(val username: String, val enabled: Boolean)
+typealias UserPartialData = co.mercenary.creators.kotlin.boot.data.UserPartialData
 
-data class UserAndPassData(val username: String, val password: String) {
-    fun encode(pass: PasswordEncoder) = UserAndPassData(username, pass.encode(password))
-}
+data class AuthoritiesData(val username: String, val authority: String)
 
 inline fun <reified T : Any> BeanFactory.beanOf(): T = getBean(T::class.java)
