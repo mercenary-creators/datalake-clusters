@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package co.mercenary.creators.datalake.clusters
+package co.mercenary.creators.datalake.clusters.support
 
-import co.mercenary.creators.kotlin.boot.*
-import org.springframework.boot.autoconfigure.SpringBootApplication
+import co.mercenary.creators.kotlin.json.base.JSONAware
 
-@SpringBootApplication(proxyBeanMethods = false)
-class DataLakeApplication
-
-fun main() {
-    boot<DataLakeApplication>()
+data class AuthoritiesData(val username: String, val authority: String) : JSONAware {
+    override fun toString() = toJSONString()
 }

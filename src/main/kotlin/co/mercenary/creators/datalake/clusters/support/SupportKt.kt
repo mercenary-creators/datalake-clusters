@@ -28,6 +28,4 @@ typealias DataLakeSupport = co.mercenary.creators.kotlin.boot.data.AbstractAppli
 
 typealias UserPartialData = co.mercenary.creators.kotlin.boot.data.UserPartialData
 
-data class AuthoritiesData(val username: String, val authority: String)
-
 inline fun <reified T : Any> BeanFactory.beanOf(): T = getBean(T::class.java)

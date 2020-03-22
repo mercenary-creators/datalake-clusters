@@ -20,6 +20,6 @@ import co.mercenary.creators.kotlin.boot.AbstractApplicationConfiguration
 import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.annotation.Configuration
 
-@Configuration
 @ServletComponentScan
+@Configuration(proxyBeanMethods = false)
 class ApplicationConfiguration : AbstractApplicationConfiguration()

@@ -16,9 +16,7 @@
 
 @file:kotlin.jvm.JvmName("DataLakeTestKt")
 
-package co.mercenary.creators.datalake.clusters
-
-typealias Executable = org.junit.jupiter.api.function.Executable
+package co.mercenary.creators.datalake.clusters.support
 
 typealias DataLakeTest = co.mercenary.creators.datalake.clusters.test.util.AbstractApplicationTests
 

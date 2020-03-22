@@ -16,12 +16,39 @@
 
 package co.mercenary.creators.datalake.clusters.test.main
 
-import co.mercenary.creators.datalake.clusters.DataLakeTest
+import co.mercenary.creators.datalake.clusters.support.*
+import co.mercenary.creators.kotlin.json.*
+import co.mercenary.creators.kotlin.util.*
 import org.junit.Test
 
 class PasswordTest : DataLakeTest() {
     @Test
     fun test() {
-        info { "hi" }
+        warn { dash() }
+        info { here() }
+        val data = json("author" to author, "age" to 56.75.years + 1.minute)
+        data.size shouldBe 2
+        call(data)
+        info { data }
+        info { data.size }
+        data.size shouldBe 3
+        val dean = json("username" to "dean", "enabled" to 1).toDataType<UserPartialData>()
+        info { dean }
+        dean.enabled shouldBe true
+        val john = json("username" to "john", "enabled" to "false").toDataType<UserPartialData>()
+        info { john }
+        john.enabled shouldBe false
+        val root = mapOf("username" to "root", "enabled" to "true").toDataType<UserPartialData>()
+        info { root }
+        root.enabled shouldNotBe false
+    }
+
+    fun call(data: json) {
+        info { data }
+        info { data.size }
+        data.size shouldBe 2
+        warn { dash() }
+        info { here() }
+        data["date"] = dateOf()
     }
 }
