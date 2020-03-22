@@ -31,10 +31,10 @@ class DataLakeService : DataLakeSupport() {
     fun list() = queryList("SELECT * FROM servers")
 
     @GetMapping("/posts")
-    fun posts() = getFluxOf<PostData>(PostData.path()).limit(15)
+    fun posts() = getFluxOf<PostData>(PostData.path()).limit(20)
 
     @GetMapping("/todos")
-    fun todos() = getFluxOf<TodoData>(TodoData.path()).limit(15)
+    fun todos() = getFluxOf<TodoData>(TodoData.path()).limit(20)
 
     @GetMapping("/users")
     fun users() = queryListOf<UserPartialData>("SELECT username, enabled FROM users")
