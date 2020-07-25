@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.datalake.clusters.support
 
-import co.mercenary.creators.kotlin.json.base.JSONAware
+import co.mercenary.creators.kotlin.json.JSONAware
 
 data class AuthoritiesData(val username: String, val authority: String) : JSONAware {
     override fun toString() = toJSONString()

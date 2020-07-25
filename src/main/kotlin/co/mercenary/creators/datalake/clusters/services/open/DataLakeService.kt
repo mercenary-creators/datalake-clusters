@@ -17,7 +17,7 @@
 package co.mercenary.creators.datalake.clusters.services.open
 
 import co.mercenary.creators.datalake.clusters.support.*
-import co.mercenary.creators.kotlin.util.*
+import co.mercenary.creators.kotlin.boot.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -31,10 +31,10 @@ class DataLakeService : DataLakeSupport() {
     fun list() = queryList("SELECT * FROM servers")
 
     @GetMapping("/posts")
-    fun posts() = getFluxOf<PostData>(PostData.path()).limit(20)
+    fun posts() = getFluxOf<PostData>(PostData.path()).limit(MAX_RESILTS)
 
     @GetMapping("/todos")
-    fun todos() = getFluxOf<TodoData>(TodoData.path()).limit(20)
+    fun todos() = getFluxOf<TodoData>(TodoData.path()).limit(MAX_RESILTS)
 
     @GetMapping("/users")
     fun users() = queryListOf<UserPartialData>("SELECT username, enabled FROM users")
