@@ -26,6 +26,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession(redisNamespace = "datalake:session")
 class SecurityConfiguration : AbstractDataSecurityConfiguration() {
     override fun configure(conf: HttpSecurity) {
-        conf.authorizeRequests().antMatchers("/open/**").permitAll().antMatchers("/user/**").hasAuthority("USER").requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
+        conf.authorizeRequests().antMatchers("/", "/**/*.{js,html,css}", "/open/**").permitAll().antMatchers("/user/**").hasAuthority("USER").requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("ACTUATOR").and().httpBasic().and().csrf().disable()
     }
 }
