@@ -17,6 +17,7 @@
 package co.mercenary.creators.datalake.clusters.test.main
 
 import co.mercenary.creators.datalake.clusters.support.*
+import co.mercenary.creators.kotlin.boot.UserPartialData
 import co.mercenary.creators.kotlin.json.*
 import co.mercenary.creators.kotlin.util.*
 import org.junit.Test
