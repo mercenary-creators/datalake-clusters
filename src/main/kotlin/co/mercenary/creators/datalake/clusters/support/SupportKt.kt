@@ -18,10 +18,13 @@
 
 package co.mercenary.creators.datalake.clusters.support
 
+import co.mercenary.creators.kotlin.util.CreatorsDsl
+
 typealias PostData = co.mercenary.creators.kotlin.json.util.typicode.TypicodePostData
 
 typealias TodoData = co.mercenary.creators.kotlin.json.util.typicode.TypicodeTodoData
 
 typealias DataLakeSupport = co.mercenary.creators.kotlin.boot.data.AbstractApplicationDataSupport
 
+@CreatorsDsl
 inline fun <reified T : Any> org.springframework.beans.factory.BeanFactory.beanOf(): T = getBean(T::class.java)
