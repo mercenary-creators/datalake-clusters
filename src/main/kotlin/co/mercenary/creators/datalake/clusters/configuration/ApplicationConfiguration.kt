@@ -22,4 +22,4 @@ import org.springframework.context.annotation.Configuration
 
 @ServletComponentScan
 @Configuration(proxyBeanMethods = false)
-class ApplicationConfiguration : AbstractApplicationConfiguration()
+class ApplicationConfiguration : AbstractApplicationConfiguration(3600, "/resources/**" to "/resources")
